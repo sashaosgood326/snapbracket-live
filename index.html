@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SnapBracket</title>
+<style>
+body{margin:0;font-family:sans-serif;background:#070A12;color:#fff}
+.center{display:flex;align-items:center;justify-content:center;height:100vh;font-size:22px}
+</style>
+</head>
+<body>
+<div id="app" class="center">Loading SnapBracket...</div>
+<script>
+async function load(){
+  try{
+    const res = await fetch('/.netlify/functions/odds');
+    const data = await res.json();
+    document.getElementById('app').innerHTML = 
+      "<pre style='text-align:left;white-space:pre-wrap'>" + JSON.stringify(data,null,2) + "</pre>";
+  }catch(e){
+    document.getElementById('app').innerHTML = "Error loading live data";
+  }
+}
+load();
+</script>
+</body>
+</html>
