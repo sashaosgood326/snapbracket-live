@@ -3,63 +3,446 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<title>SnapBracket</title>
+<title>SnapBracket™</title>
 <style>
-:root{--bg:#070A12;--panel:#111827;--text:#eef4ff;--muted:#a9b7d1;--blue:#36A3FF;--orange:#FF8A2A;--red:#FF5A4F;--border:rgba(255,255,255,.10)}
-*{box-sizing:border-box}html,body{margin:0;padding:0}
-body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:radial-gradient(1100px 700px at 18% 16%, rgba(54,163,255,.18), transparent 60%),radial-gradient(950px 650px at 82% 24%, rgba(255,138,42,.12), transparent 62%),var(--bg)}
-.top{position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);background:rgba(7,10,18,.72);border-bottom:1px solid var(--border)}
-.wrap{max-width:1400px;margin:0 auto;padding:14px}
+:root{
+  --bg:#070A12; --panel:#111827; --text:#eef4ff; --muted:#a9b7d1;
+  --blue:#36A3FF; --orange:#FF8A2A; --red:#FF5A4F; --green:#35d07f; --border:rgba(255,255,255,.10);
+}
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1100px 700px at 18% 16%, rgba(54,163,255,.18), transparent 60%),
+    radial-gradient(950px 650px at 82% 24%, rgba(255,138,42,.12), transparent 62%),
+    var(--bg);
+}
+.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(7,10,18,.76);border-bottom:1px solid var(--border)}
+.wrap{max-width:1480px;margin:0 auto;padding:14px 16px}
 .brandRow{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-.brandTitle{font-weight:1000;font-size:28px}.brandSub{color:var(--muted);font-size:13px;margin-top:4px}
+.brandTitle{font-weight:1000;font-size:30px;line-height:1}
+.brandSub{color:var(--muted);font-size:13px;margin-top:4px}
 .chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:8px 12px;border:1px solid var(--border);border-radius:999px;color:var(--muted);background:rgba(255,255,255,.03);font-size:12px}
-.main{max-width:1400px;margin:0 auto;padding:14px;display:grid;grid-template-columns:300px 1fr;gap:14px}
-@media (max-width:980px){.main{grid-template-columns:1fr}}
+.main{max-width:1480px;margin:0 auto;padding:14px 16px;display:grid;grid-template-columns:320px 1fr;gap:14px}
+@media (max-width:1100px){.main{grid-template-columns:1fr}}
 .panel{border:1px solid var(--border);border-radius:18px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));box-shadow:0 18px 40px rgba(0,0,0,.28)}
 .panelHd{padding:14px 16px;border-bottom:1px solid var(--border)}.panelTitle{font-weight:1000;font-size:18px}.panelNote{font-size:12px;color:var(--muted);margin-top:4px}.panelBd{padding:14px 16px}
-.riskGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.riskBtn{background:#0a1222;color:var(--text);border:1px solid var(--border);border-radius:16px;padding:14px 10px;cursor:pointer;font-weight:900;font-size:15px}
-.riskBtn small{display:block;color:var(--muted);font-size:12px;margin-top:4px}.riskBtn.active{outline:2px solid rgba(54,163,255,.35);background:linear-gradient(180deg, rgba(54,163,255,.10), rgba(255,138,42,.05))}
-.actions{display:flex;gap:10px;margin-top:10px}.actionBtn{flex:1;border:1px solid var(--border);background:#0a1222;color:var(--text);border-radius:14px;padding:12px;cursor:pointer;font-weight:900}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{background:#0a1222;color:var(--text);border:1px solid var(--border);border-radius:16px;padding:12px 10px;cursor:pointer;font-weight:900}
+.btn small{display:block;color:var(--muted);font-size:12px;margin-top:4px}.btn.active{outline:2px solid rgba(54,163,255,.35);background:linear-gradient(180deg, rgba(54,163,255,.10), rgba(255,138,42,.05))}
+.actions,.stack{display:flex;gap:10px;margin-top:10px}.stack{flex-direction:column}
+.field{margin-top:10px}.label{font-size:11px;color:var(--muted);margin-bottom:6px}
+.select,input{width:100%;border:1px solid var(--border);border-radius:12px;background:#0a1222;color:var(--text);padding:10px 12px}
 .boardTop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border)}
-.tabs{display:flex;gap:8px;overflow:auto;padding:12px 16px 0}.tab{border:1px solid var(--border);background:#0a1222;color:var(--muted);border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:900;white-space:nowrap}.tab.active{color:var(--text);background:linear-gradient(180deg, rgba(54,163,255,.14), rgba(255,138,42,.07))}
+.tabs{display:flex;gap:8px;overflow:auto;padding:12px 16px 0}
+.tab{border:1px solid var(--border);background:#0a1222;color:var(--muted);border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:900;white-space:nowrap}
+.tab.active{outline:2px solid rgba(54,163,255,.25);color:var(--text);background:linear-gradient(180deg, rgba(54,163,255,.14), rgba(255,138,42,.07))}
 .games{padding:14px 16px 16px;display:grid;grid-template-columns:repeat(2,minmax(320px,1fr));gap:12px}
-@media (max-width:1100px){.games{grid-template-columns:1fr}}
-.game{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:18px;padding:12px}.gameTop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.match{font-weight:1000;font-size:18px;line-height:1.18}.meta{font-size:12px;color:var(--muted);margin-top:4px}.pick{border:1px solid rgba(255,138,42,.25);background:rgba(255,138,42,.12);border-radius:999px;padding:7px 11px;font-size:12px;font-weight:1000}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.mini{border:1px solid var(--border);border-radius:14px;padding:10px;background:rgba(0,0,0,.14)}.k{font-size:11px;color:var(--muted)}.v{font-size:16px;font-weight:1000;margin-top:2px}.s{font-size:11px;color:var(--muted);margin-top:2px}
+@media (max-width:1180px){.games{grid-template-columns:1fr}}
+.card{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:18px;padding:12px}
+.cardTop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.match{font-weight:1000;font-size:20px;line-height:1.18}
+.meta{font-size:12px;color:var(--muted);margin-top:4px}
+.pick{border:1px solid rgba(255,138,42,.25);background:rgba(255,138,42,.12);border-radius:999px;padding:7px 11px;font-size:12px;font-weight:1000}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+.mini{border:1px solid var(--border);border-radius:14px;padding:10px;background:rgba(0,0,0,.14)}.k{font-size:11px;color:var(--muted)}.v{font-size:16px;font-weight:1000;margin-top:2px}.s{font-size:11px;color:var(--muted);margin-top:2px}
 .bar{margin-top:6px;height:10px;border-radius:999px;border:1px solid var(--border);overflow:hidden;background:rgba(255,255,255,.05)}.bar>div{height:100%;background:linear-gradient(90deg,var(--blue),var(--orange),var(--red))}
 .status{padding:20px;text-align:center;color:var(--muted)}.footer{padding:14px 16px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.list{display:grid;gap:10px}
+.lockCard{border:1px solid rgba(53,208,127,.22);background:rgba(53,208,127,.08);border-radius:16px;padding:12px}
+.lockTitle{font-weight:1000;font-size:16px}
+.badgeGood{color:var(--green)} .hidden{display:none}
 </style>
 </head>
 <body>
-<div class="top"><div class="wrap brandRow"><div><div class="brandTitle">SnapBracket™</div><div class="brandSub">Vegas-driven picks, totals, and confidence.</div></div><div class="chips"><span class="chip" id="chipRound">Round: Live Board</span><span class="chip" id="chipUpdated">Updated: —</span><span class="chip" id="chipGames">Games: —</span></div></div></div>
-<div class="main">
-<div class="panel"><div class="panelHd"><div class="panelTitle">Risk</div><div class="panelNote">Your only control. Everything else is automatic.</div></div><div class="panelBd"><div class="riskGrid"><button class="riskBtn" data-risk="NONE">NONE<small>Pure chalk</small></button><button class="riskBtn active" data-risk="LOW">LOW<small>Small upsets</small></button><button class="riskBtn" data-risk="MEDIUM">MEDIUM<small>Balanced</small></button><button class="riskBtn" data-risk="HIGH">HIGH<small>Cinderella</small></button></div><div class="actions"><button class="actionBtn" id="refreshBtn">REFRESH</button><button class="actionBtn" id="shareBtn">SHARE</button></div></div></div>
-<div class="panel"><div class="boardTop"><div><div class="panelTitle">Big Board</div><div class="panelNote" id="statusLine">Loading live Vegas odds…</div></div><div class="chips"><span class="chip" id="chipRisk">Risk: LOW</span><span class="chip" id="chipSource">Source: Odds API</span></div></div><div class="tabs" id="tabs"></div><div class="games" id="games"><div class="status">Loading…</div></div><div class="footer">© 2026 Sasha G. Osgood. SnapBracket™ is proprietary. Informational and entertainment use only.</div></div>
+<div class="top">
+  <div class="wrap brandRow">
+    <div>
+      <div class="brandTitle">SnapBracket™</div>
+      <div class="brandSub">Vegas-driven picks, totals, confidence, locks, and auto-bracket.</div>
+    </div>
+    <div class="chips">
+      <span class="chip" id="chipRound">Board: Live</span>
+      <span class="chip" id="chipUpdated">Updated: —</span>
+      <span class="chip" id="chipGames">Games: —</span>
+      <span class="chip" id="chipBooks">Books: —</span>
+    </div>
+  </div>
 </div>
+
+<div class="main">
+  <div class="panel">
+    <div class="panelHd">
+      <div class="panelTitle">Control Center</div>
+      <div class="panelNote">Risk, filters, top locks, and bracket builder.</div>
+    </div>
+    <div class="panelBd">
+      <div class="label">Risk profile</div>
+      <div class="grid2">
+        <button class="btn risk active" data-risk="LOW">LOW<small>Small upsets</small></button>
+        <button class="btn risk" data-risk="NONE">NONE<small>Pure chalk</small></button>
+        <button class="btn risk" data-risk="MEDIUM">MEDIUM<small>Balanced</small></button>
+        <button class="btn risk" data-risk="HIGH">HIGH<small>Cinderella</small></button>
+      </div>
+
+      <div class="field">
+        <div class="label">View</div>
+        <div class="grid2">
+          <button class="btn section active" data-section="board">BOARD</button>
+          <button class="btn section" data-section="locks">LOCKS</button>
+          <button class="btn section" data-section="bracket">BRACKET</button>
+          <button class="btn section" data-section="settings">SETTINGS</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="label">Minimum confidence</div>
+        <input id="minConfidence" class="select" type="number" min="50" max="99" step="1" value="50"/>
+      </div>
+
+      <div class="field">
+        <div class="label">Sort by</div>
+        <select id="sortMode" class="select">
+          <option value="confidence">Confidence</option>
+          <option value="alphabetical">Alphabetical</option>
+          <option value="total_high">Highest total</option>
+          <option value="spread_big">Biggest spread</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <div class="label">Lock count</div>
+        <select id="lockCount" class="select">
+          <option>5</option><option selected>8</option><option>10</option>
+        </select>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="refreshBtn">REFRESH</button>
+        <button class="btn" id="shareBtn">SHARE</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="boardTop">
+      <div>
+        <div class="panelTitle" id="sectionTitle">Big Board</div>
+        <div class="panelNote" id="statusLine">Loading live Vegas odds…</div>
+      </div>
+      <div class="chips">
+        <span class="chip" id="chipRisk">Risk: LOW</span>
+        <span class="chip" id="chipSource">Source: Odds API</span>
+      </div>
+    </div>
+
+    <div id="boardSection">
+      <div class="tabs" id="tabs"></div>
+      <div class="games" id="games"><div class="status">Loading…</div></div>
+    </div>
+
+    <div id="locksSection" class="hidden">
+      <div class="panelBd">
+        <div class="list" id="locksList"><div class="status">Loading…</div></div>
+      </div>
+    </div>
+
+    <div id="bracketSection" class="hidden">
+      <div class="panelBd">
+        <div class="list" id="bracketList"><div class="status">Loading…</div></div>
+      </div>
+    </div>
+
+    <div id="settingsSection" class="hidden">
+      <div class="panelBd">
+        <div class="list">
+          <div class="mini">
+            <div class="k">Model layer</div>
+            <div class="v">Consensus + probability engine</div>
+            <div class="s">The system now scans every bookmaker returned by the API, normalizes h2h prices into win probability, computes consensus totals and spreads, and uses risk mode to control upset appetite.</div>
+          </div>
+          <div class="mini">
+            <div class="k">Phase 2 implemented</div>
+            <div class="v badgeGood">Top locks + auto bracket</div>
+            <div class="s">This build includes a Top Locks view and an Auto Bracket view built from the live board. The next true upgrade is historical line movement storage, which requires persistence.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">© 2026 Sasha G. Osgood. SnapBracket™ is proprietary. Informational and entertainment use only.</div>
+  </div>
+</div>
+
 <script>
-let RAW=[]; let activeRisk="LOW"; let activeTab="All";
-function impliedProb(decimalOdds){ return decimalOdds>1 ? 1/decimalOdds : 0.5; }
-function normalizeH2H(outcomes){ if(!outcomes||outcomes.length<2) return null; const p0=impliedProb(outcomes[0].price); const p1=impliedProb(outcomes[1].price); const total=p0+p1||1; return [{name:outcomes[0].name,p:p0/total,price:outcomes[0].price},{name:outcomes[1].name,p:p1/total,price:outcomes[1].price}]; }
-function getMarket(game,key){ const books=game.bookmakers||[]; for(const b of books){ const m=(b.markets||[]).find(x=>x.key===key); if(m) return m; } return null; }
-function gameRegion(game){ const text=(game.home_team+" "+game.away_team).toLowerCase(); const map={"duke":"East","uconn":"East","ucla":"East","kansas":"East","ohio":"East","louisville":"East","st. john":"East","arizona":"West","purdue":"West","gonzaga":"West","wisconsin":"West","villanova":"West","arkansas":"West","miami":"West","missouri":"West","houston":"South","illinois":"South","north carolina":"South","saint mary":"South","clemson":"South","iowa":"South","vanderbilt":"South","nebraska":"South","iowa state":"Midwest","virginia":"Midwest","kentucky":"Midwest","georgia":"Midwest","texas tech":"Midwest","alabama":"Midwest"}; for(const k in map){ if(text.includes(k)) return map[k]; } return "All"; }
-function mapGame(game){
-  const h2h=getMarket(game,"h2h"), totals=getMarket(game,"totals"), spreads=getMarket(game,"spreads");
-  const probs=h2h ? normalizeH2H(h2h.outcomes) : null; if(!probs) return null;
-  let a=probs[0], b=probs[1], winner=a.p>=b.p?a.name:b.name, confidence=Math.round(Math.max(a.p,b.p)*100), underdog=a.p<b.p?a.name:b.name;
-  if(activeRisk==="MEDIUM"&&confidence<=60) winner=underdog;
-  if(activeRisk==="HIGH"&&confidence<=68) winner=underdog;
-  const totalPoint=(totals&&totals.outcomes&&totals.outcomes[0]&&totals.outcomes[0].point)||(totals&&totals.outcomes&&totals.outcomes[1]&&totals.outcomes[1].point)||"—";
-  let spreadText="—"; if(spreads&&spreads.outcomes&&spreads.outcomes.length>=2){ const fav=spreads.outcomes.find(x=>x.point<0)||spreads.outcomes[0]; spreadText=fav.name+" "+fav.point; }
-  return {id:game.id,region:gameRegion(game),matchup:game.away_team+" vs "+game.home_team,winner,confidence,total:totalPoint,spread:spreadText,updated:game.commence_time};
+let RAW = [];
+let activeRisk = "LOW";
+let activeTab = "All";
+let activeSection = "board";
+
+function impliedProb(decimalOdds){ return decimalOdds > 1 ? 1 / decimalOdds : 0.5; }
+function round1(x){ return Math.round(x * 10) / 10; }
+function normalizeH2H(outcomes){
+  if (!outcomes || outcomes.length < 2) return null;
+  const p0 = impliedProb(outcomes[0].price);
+  const p1 = impliedProb(outcomes[1].price);
+  const total = p0 + p1 || 1;
+  return [
+    { name: outcomes[0].name, p: p0 / total, price: outcomes[0].price },
+    { name: outcomes[1].name, p: p1 / total, price: outcomes[1].price }
+  ];
 }
-function buildTabs(items){ const tabs=["All"].concat(Array.from(new Set(items.map(x=>x.region).filter(x=>x!=="All")))); const el=document.getElementById("tabs"); el.innerHTML=""; tabs.forEach(tab=>{ const b=document.createElement("button"); b.className="tab"+(tab===activeTab?" active":""); b.textContent=tab; b.onclick=()=>{activeTab=tab; render();}; el.appendChild(b);});}
-function render(){ const mapped=RAW.map(mapGame).filter(Boolean); buildTabs(mapped); const shown=activeTab==="All"?mapped:mapped.filter(x=>x.region===activeTab); document.getElementById("chipGames").textContent="Games: "+shown.length; document.getElementById("chipRisk").textContent="Risk: "+activeRisk; document.getElementById("chipUpdated").textContent="Updated: "+new Date().toLocaleString(); const games=document.getElementById("games"); if(!shown.length){games.innerHTML='<div class="status">No games available.</div>'; return;} games.innerHTML=shown.map(g=>`<div class="game"><div class="gameTop"><div><div class="match">${g.matchup}</div><div class="meta">${g.region} • Spread: ${g.spread} • Total: ${g.total}</div></div><div class="pick">${g.winner} • ${g.confidence}%</div></div><div class="grid"><div class="mini"><div class="k">Predicted winner</div><div class="v">${g.winner}</div><div class="s">Odds-normalized probability</div></div><div class="mini"><div class="k">Confidence</div><div class="v">${g.confidence}%</div><div class="bar"><div style="width:${g.confidence}%"></div></div><div class="s">Adjusted by risk mode</div></div><div class="mini"><div class="k">Spread</div><div class="v">${g.spread}</div><div class="s">Consensus first bookmaker found</div></div><div class="mini"><div class="k">Game total</div><div class="v">${g.total}</div><div class="s">${g.updated?new Date(g.updated).toLocaleString():""}</div></div></div></div>`).join(""); }
-async function load(){ try{ const res=await fetch('/.netlify/functions/odds',{cache:'no-store'}); const data=await res.json(); if(!Array.isArray(data)) throw new Error('Unexpected response'); RAW=data; document.getElementById('statusLine').textContent='Live Vegas odds loaded'; render(); } catch(err){ document.getElementById('statusLine').textContent='Live odds failed to load'; document.getElementById('games').innerHTML='<div class="status">Live odds failed to load.<br>'+err.message+'</div>'; } }
-document.querySelectorAll('.riskBtn').forEach(btn=>{ btn.onclick=()=>{ document.querySelectorAll('.riskBtn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); activeRisk=btn.dataset.risk; render(); }; });
-document.getElementById('refreshBtn').onclick=load;
-document.getElementById('shareBtn').onclick=async()=>{ const text='SnapBracket — '+activeTab+' — Risk '+activeRisk; try{ if(navigator.share) await navigator.share({title:'SnapBracket',text,url:location.href}); else { await navigator.clipboard.writeText(location.href); alert('Link copied'); } }catch(e){} };
+function getBooks(game){ return game.bookmakers || []; }
+function getMarket(game, key){
+  const books = getBooks(game);
+  for (const b of books){
+    const m = (b.markets || []).find(x => x.key === key);
+    if (m) return m;
+  }
+  return null;
+}
+function collectBookTotals(game){
+  const vals = [];
+  for (const b of getBooks(game)){
+    const m = (b.markets || []).find(x => x.key === "totals");
+    if (m && m.outcomes && m.outcomes[0] && m.outcomes[0].point != null) vals.push(Number(m.outcomes[0].point));
+  }
+  return vals;
+}
+function collectBookSpreads(game){
+  const vals = [];
+  for (const b of getBooks(game)){
+    const m = (b.markets || []).find(x => x.key === "spreads");
+    if (m && m.outcomes){
+      const fav = m.outcomes.find(x => Number(x.point) < 0);
+      if (fav) vals.push({ name: fav.name, point: Number(fav.point) });
+    }
+  }
+  return vals;
+}
+function consensusTotal(game){
+  const vals = collectBookTotals(game);
+  if (!vals.length) return null;
+  const avg = vals.reduce((a,b)=>a+b,0) / vals.length;
+  return round1(avg);
+}
+function consensusSpread(game){
+  const vals = collectBookSpreads(game);
+  if (!vals.length) return null;
+  const map = {};
+  vals.forEach(v => {
+    map[v.name] = map[v.name] || [];
+    map[v.name].push(v.point);
+  });
+  let bestName = Object.keys(map)[0];
+  let bestCount = map[bestName].length;
+  for (const k of Object.keys(map)){
+    if (map[k].length > bestCount){ bestName = k; bestCount = map[k].length; }
+  }
+  const avg = map[bestName].reduce((a,b)=>a+b,0) / map[bestName].length;
+  return { name: bestName, point: round1(avg) };
+}
+function gameRegion(game){
+  const text = `${game.home_team} ${game.away_team}`.toLowerCase();
+  const byName = {
+    "duke":"East","uconn":"East","ucla":"East","kansas":"East","ohio":"East","louisville":"East","st. john":"East",
+    "arizona":"West","purdue":"West","gonzaga":"West","wisconsin":"West","villanova":"West","arkansas":"West","miami":"West","missouri":"West",
+    "houston":"South","illinois":"South","north carolina":"South","saint mary":"South","clemson":"South","iowa":"South","vanderbilt":"South","nebraska":"South",
+    "iowa state":"Midwest","virginia":"Midwest","kentucky":"Midwest","georgia":"Midwest","texas tech":"Midwest","alabama":"Midwest"
+  };
+  for (const k in byName){ if (text.includes(k)) return byName[k]; }
+  return "All";
+}
+function mapGame(game){
+  const h2h = getMarket(game, "h2h");
+  const probs = h2h ? normalizeH2H(h2h.outcomes) : null;
+  if (!probs) return null;
+
+  let [a, b] = probs;
+  let winner = a.p >= b.p ? a.name : b.name;
+  let confidence = Math.round(Math.max(a.p, b.p) * 100);
+  const underdog = a.p < b.p ? a.name : b.name;
+
+  if (activeRisk === "MEDIUM" && confidence <= 60) winner = underdog;
+  if (activeRisk === "HIGH" && confidence <= 68) winner = underdog;
+
+  const region = gameRegion(game);
+  const totalConsensus = consensusTotal(game);
+  const spreadConsensus = consensusSpread(game);
+  const books = getBooks(game).length;
+
+  return {
+    id: game.id,
+    region,
+    matchup: `${game.away_team} vs ${game.home_team}`,
+    winner,
+    confidence,
+    total: totalConsensus ?? "—",
+    spread: spreadConsensus ? `${spreadConsensus.name} ${spreadConsensus.point}` : "—",
+    books,
+    updated: game.commence_time
+  };
+}
+function allMapped(){ return RAW.map(mapGame).filter(Boolean); }
+function filteredGames(){
+  let items = allMapped().filter(g => g.confidence >= Number(document.getElementById("minConfidence").value || 50));
+  if (activeTab !== "All") items = items.filter(g => g.region === activeTab);
+
+  const sort = document.getElementById("sortMode").value;
+  if (sort === "confidence") items.sort((a,b)=>b.confidence-a.confidence);
+  if (sort === "alphabetical") items.sort((a,b)=>a.matchup.localeCompare(b.matchup));
+  if (sort === "total_high") items.sort((a,b)=>(Number(b.total)||0)-(Number(a.total)||0));
+  if (sort === "spread_big") items.sort((a,b)=>Math.abs(parseFloat(String(b.spread).split(" ").pop())||0)-Math.abs(parseFloat(String(a.spread).split(" ").pop())||0));
+  return items;
+}
+function buildTabs(items){
+  const tabs = ["All", ...Array.from(new Set(items.map(x => x.region).filter(x => x !== "All")))];
+  const el = document.getElementById("tabs");
+  el.innerHTML = "";
+  tabs.forEach(tab => {
+    const b = document.createElement("button");
+    b.className = "tab" + (tab === activeTab ? " active" : "");
+    b.textContent = tab;
+    b.onclick = () => { activeTab = tab; render(); };
+    el.appendChild(b);
+  });
+}
+function renderBoard(items){
+  const el = document.getElementById("games");
+  if (!items.length){
+    el.innerHTML = '<div class="status">No games available for this filter.</div>';
+    return;
+  }
+  el.innerHTML = items.map(g => `
+    <div class="card">
+      <div class="cardTop">
+        <div>
+          <div class="match">${g.matchup}</div>
+          <div class="meta">${g.region} • Spread: ${g.spread} • Total: ${g.total}</div>
+        </div>
+        <div class="pick">${g.winner} • ${g.confidence}%</div>
+      </div>
+      <div class="grid">
+        <div class="mini">
+          <div class="k">Predicted winner</div>
+          <div class="v">${g.winner}</div>
+          <div class="s">Odds-normalized probability</div>
+        </div>
+        <div class="mini">
+          <div class="k">Confidence</div>
+          <div class="v">${g.confidence}%</div>
+          <div class="bar"><div style="width:${g.confidence}%"></div></div>
+          <div class="s">Adjusted by risk mode</div>
+        </div>
+        <div class="mini">
+          <div class="k">Consensus spread</div>
+          <div class="v">${g.spread}</div>
+          <div class="s">${g.books} book(s) scanned</div>
+        </div>
+        <div class="mini">
+          <div class="k">Consensus total</div>
+          <div class="v">${g.total}</div>
+          <div class="s">${g.updated ? new Date(g.updated).toLocaleString() : ""}</div>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+function renderLocks(items){
+  const count = Number(document.getElementById("lockCount").value || 8);
+  const top = items.filter(g => g.confidence >= 68).slice(0, count);
+  const el = document.getElementById("locksList");
+  if (!top.length){
+    el.innerHTML = '<div class="status">No locks at the current confidence filter.</div>';
+    return;
+  }
+  el.innerHTML = top.map((g, i) => `
+    <div class="lockCard">
+      <div class="lockTitle">#${i+1} • ${g.winner} • ${g.confidence}%</div>
+      <div class="meta">${g.matchup}</div>
+      <div class="meta">Spread: ${g.spread} • Total: ${g.total}</div>
+    </div>
+  `).join("");
+}
+function renderBracket(items){
+  const byRegion = {};
+  items.forEach(g => { byRegion[g.region] = byRegion[g.region] || []; byRegion[g.region].push(g); });
+  const el = document.getElementById("bracketList");
+  const regions = Object.keys(byRegion).sort();
+  if (!regions.length){
+    el.innerHTML = '<div class="status">No bracket data available.</div>';
+    return;
+  }
+  el.innerHTML = regions.map(region => `
+    <div class="mini">
+      <div class="k">${region}</div>
+      <div class="v">${region} auto-picks</div>
+      <div class="s">${byRegion[region].map(g => `${g.winner} • ${g.confidence}%`).join(' • ')}</div>
+    </div>
+  `).join("");
+}
+function setSection(section){
+  activeSection = section;
+  document.querySelectorAll(".section").forEach(b => b.classList.toggle("active", b.dataset.section === section));
+  document.getElementById("boardSection").classList.toggle("hidden", section !== "board");
+  document.getElementById("locksSection").classList.toggle("hidden", section !== "locks");
+  document.getElementById("bracketSection").classList.toggle("hidden", section !== "bracket");
+  document.getElementById("settingsSection").classList.toggle("hidden", section !== "settings");
+  document.getElementById("sectionTitle").textContent =
+    section === "board" ? "Big Board" :
+    section === "locks" ? "Top Locks" :
+    section === "bracket" ? "Auto Bracket" : "System Settings";
+}
+function render(){
+  const all = allMapped();
+  buildTabs(all);
+  const shown = filteredGames();
+  document.getElementById("chipGames").textContent = `Games: ${shown.length}`;
+  document.getElementById("chipRisk").textContent = `Risk: ${activeRisk}`;
+  document.getElementById("chipUpdated").textContent = `Updated: ${new Date().toLocaleString()}`;
+  document.getElementById("chipBooks").textContent = `Books: ${Math.max(...all.map(g => g.books), 0)}`;
+  renderBoard(shown);
+  renderLocks(shown);
+  renderBracket(shown);
+}
+async function load(){
+  try{
+    const res = await fetch('/.netlify/functions/odds', { cache:'no-store' });
+    const data = await res.json();
+    if (!Array.isArray(data)) throw new Error('Unexpected response');
+    RAW = data;
+    document.getElementById("statusLine").textContent = "Live Vegas odds loaded";
+    render();
+  }catch(err){
+    document.getElementById("statusLine").textContent = "Live odds failed to load";
+    document.getElementById("games").innerHTML = `<div class="status">Live odds failed to load.<br>${err.message}</div>`;
+    document.getElementById("locksList").innerHTML = '<div class="status">Live odds failed to load.</div>';
+    document.getElementById("bracketList").innerHTML = '<div class="status">Live odds failed to load.</div>';
+  }
+}
+document.querySelectorAll(".risk").forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll(".risk").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeRisk = btn.dataset.risk;
+    render();
+  };
+});
+document.querySelectorAll(".section").forEach(btn => btn.onclick = () => setSection(btn.dataset.section));
+document.getElementById("refreshBtn").onclick = load;
+document.getElementById("shareBtn").onclick = async () => {
+  const text = `SnapBracket — ${activeSection} — Risk ${activeRisk}`;
+  try{
+    if (navigator.share) await navigator.share({ title:'SnapBracket', text, url:location.href });
+    else { await navigator.clipboard.writeText(location.href); alert('Link copied'); }
+  }catch(e){}
+};
+document.getElementById("minConfidence").oninput = render;
+document.getElementById("sortMode").onchange = render;
+document.getElementById("lockCount").onchange = render;
+setSection("board");
 load();
 </script>
 </body>
