@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>SnapBracket™</title>
+<title>SnapBracket™ Live</title>
 <style>
 :root{
-  --bg:#070A12; --panel:#101725; --panel2:#0d1320; --text:#eef4ff; --muted:#a9b7d1;
+  --bg:#070A12; --panel:#101725; --text:#eef4ff; --muted:#a9b7d1;
   --blue:#36A3FF; --orange:#FF8A2A; --red:#FF5A4F; --green:#35d07f; --yellow:#facc15;
   --border:rgba(255,255,255,.10); --shadow:0 18px 40px rgba(0,0,0,.28);
 }
@@ -24,7 +24,7 @@ a{color:#d6ebff}
 .hidden{display:none!important}
 .top{
   position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);
-  background:rgba(7,10,18,.76);border-bottom:1px solid var(--border)
+  background:rgba(7,10,18,.78);border-bottom:1px solid var(--border)
 }
 .wrap{max-width:1560px;margin:0 auto;padding:14px 16px}
 .brandRow{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
@@ -144,7 +144,7 @@ a{color:#d6ebff}
 <body>
 <div id="splash" class="splash">
   <div class="splashTitle">SnapBracket™</div>
-  <div class="splashSub">ESPN feel. DraftKings energy. Your private model tool.</div>
+  <div class="splashSub">Live NCAA board, picks, best bets, upset watch, and auto-bracket.</div>
   <div class="splashLegal">By continuing, you acknowledge that SnapBracket™ is proprietary to Sasha G. Osgood and is provided for informational and entertainment purposes only. It is not betting, gambling, financial, or legal advice.</div>
 </div>
 
@@ -152,14 +152,14 @@ a{color:#d6ebff}
   <div class="wrap brandRow">
     <div>
       <div class="brandTitle">SnapBracket™</div>
-      <div class="brandSub">Vegas-driven picks, totals, confidence, best bets, upset watch, and auto-bracket.</div>
+      <div class="brandSub">Live NCAA board with picks, best bets, upset watch, auto-bracket, and share view.</div>
     </div>
     <div class="chips">
-      <span class="chip" id="chipMode">Mode: LIVE</span>
+      <span class="chip">Mode: LIVE ONLY</span>
       <span class="chip" id="chipUpdated">Updated: —</span>
       <span class="chip" id="chipGames">Games: —</span>
       <span class="chip" id="chipBooks">Books: —</span>
-      <span class="chip" id="chipVersion">Build: 4.0</span>
+      <span class="chip" id="chipVersion">Build: Live Only 1.0</span>
     </div>
   </div>
 </div>
@@ -168,7 +168,7 @@ a{color:#d6ebff}
   <div class="panel">
     <div class="panelHd">
       <div class="panelTitle">Control Center</div>
-      <div class="panelNote">Risk, filters, bracket mode, and sharing.</div>
+      <div class="panelNote">Live information only. No demo fallback.</div>
     </div>
     <div class="panelBd">
       <div class="label">Bracket mode preset</div>
@@ -218,7 +218,6 @@ a{color:#d6ebff}
 
       <div class="actions">
         <button class="btn" id="refreshBtn">Refresh</button>
-        <button class="btn" id="modeBtn">Toggle LIVE / DEMO</button>
       </div>
 
       <div class="actions">
@@ -232,11 +231,11 @@ a{color:#d6ebff}
     <div class="boardTop">
       <div>
         <div class="panelTitle" id="sectionTitle">Big Board</div>
-        <div class="panelNote" id="statusLine">Loading board…</div>
+        <div class="panelNote" id="statusLine">Loading live board…</div>
       </div>
       <div class="chips">
         <span class="chip" id="chipRisk">Risk: BALANCED</span>
-        <span class="chip">Source: Odds API + Demo fallback</span>
+        <span class="chip">Source: Odds API</span>
       </div>
     </div>
 
@@ -260,8 +259,8 @@ a{color:#d6ebff}
     </div>
     <div id="settingsSection" class="hidden">
       <div class="list">
-        <div class="mini"><div class="k">Build status</div><div class="v">Phase 4 Master</div><div class="s">Premium splash, smarter model shell, Big Board, Best Bets, Upset Watch, Auto Bracket, My Card / Share, bracket presets, polished legal layer.</div></div>
-        <div class="mini"><div class="k">Live behavior</div><div class="v">Stable LIVE / DEMO</div><div class="s">If the NCAA odds endpoint is empty or unavailable, the app switches to DEMO mode gracefully instead of breaking or showing a blank state.</div></div>
+        <div class="mini"><div class="k">Build status</div><div class="v">Live-only product shell</div><div class="s">Premium splash, live board, best bets, upset watch, auto-bracket, share view, bracket presets, polished legal layer.</div></div>
+        <div class="mini"><div class="k">Live behavior</div><div class="v">No demo fallback</div><div class="s">If the NCAA odds endpoint is empty or unavailable, the app will clearly say so instead of switching to demo.</div></div>
       </div>
     </div>
 
@@ -273,21 +272,9 @@ a{color:#d6ebff}
 
 <script>
 let RAW = [];
-let MODE = "LIVE";
 let activeRisk = "BALANCED";
 let activeTab = "All";
 let activeSection = "board";
-
-const DEMO_GAMES = [
-  {id:"d1", home_team:"Duke", away_team:"UNC", demo_conf:76, demo_total:151.5, demo_spread:"Duke -6.5", commence_time:new Date().toISOString()},
-  {id:"d2", home_team:"Arizona", away_team:"UCLA", demo_conf:68, demo_total:145.5, demo_spread:"Arizona -4.5", commence_time:new Date().toISOString()},
-  {id:"d3", home_team:"Houston", away_team:"Kansas", demo_conf:74, demo_total:139.5, demo_spread:"Houston -5.5", commence_time:new Date().toISOString()},
-  {id:"d4", home_team:"UConn", away_team:"Villanova", demo_conf:79, demo_total:147.5, demo_spread:"UConn -7.5", commence_time:new Date().toISOString()},
-  {id:"d5", home_team:"Gonzaga", away_team:"Saint Mary's", demo_conf:64, demo_total:142.5, demo_spread:"Gonzaga -2.5", commence_time:new Date().toISOString()},
-  {id:"d6", home_team:"Iowa State", away_team:"Texas Tech", demo_conf:61, demo_total:136.5, demo_spread:"Iowa State -1.5", commence_time:new Date().toISOString()},
-  {id:"d7", home_team:"Purdue", away_team:"Wisconsin", demo_conf:70, demo_total:149.5, demo_spread:"Purdue -5.5", commence_time:new Date().toISOString()},
-  {id:"d8", home_team:"Alabama", away_team:"Kentucky", demo_conf:58, demo_total:162.5, demo_spread:"Alabama -1.5", commence_time:new Date().toISOString()}
-];
 
 function impliedProb(d){ return d>1 ? 1/d : 0.5; }
 function round1(x){ return Math.round(x*10)/10; }
@@ -377,27 +364,6 @@ function applyRisk(conf, winner, alt){
 }
 
 function mapGame(game){
-  if(game.demo_conf){
-    const winner = game.home_team;
-    const alt = game.away_team;
-    const riskAdj = applyRisk(game.demo_conf, winner, alt);
-    const tag = classify(riskAdj.conf);
-    return {
-      id:game.id,
-      region:regionFor(game),
-      matchup:`${game.away_team} vs ${game.home_team}`,
-      winner:riskAdj.winner,
-      confidence:riskAdj.conf,
-      total:game.demo_total,
-      spread:game.demo_spread,
-      books:0,
-      edge:round1((riskAdj.conf - 50) + 3),
-      tag,
-      why:`${riskAdj.winner} selected from model preset and fallback board.`,
-      updated:game.commence_time
-    };
-  }
-
   const h2h = getMarket(game, "h2h");
   const probs = h2h ? normalizeH2H(h2h.outcomes) : null;
   if(!probs) return null;
@@ -462,7 +428,7 @@ function buildTabs(items){
 function renderBoard(items){
   const el = document.getElementById("games");
   if(!items.length){
-    el.innerHTML = '<div class="status">No games available for this filter.</div>';
+    el.innerHTML = '<div class="status">No live NCAA games available right now.</div>';
     return;
   }
   el.innerHTML = items.map(g => `
@@ -506,7 +472,7 @@ function renderBets(items){
   const count = Number(document.getElementById("betCount").value || 8);
   const top = items.filter(g => g.confidence >= 65).slice(0, count);
   const el = document.getElementById("betsList");
-  if(!top.length){ el.innerHTML = '<div class="status">No best bets for the current filter.</div>'; return; }
+  if(!top.length){ el.innerHTML = '<div class="status">No live best bets for the current filter.</div>'; return; }
   el.innerHTML = top.map((g,i)=>`
     <div class="infoCard">
       <div class="v">#${i+1} • ${g.winner} • ${g.confidence}% • ${g.tag.label}</div>
@@ -519,7 +485,7 @@ function renderBets(items){
 function renderUpsets(items){
   const up = items.filter(g => g.tag.label === "UPSET" || g.tag.label === "TOSS-UP").slice(0, Number(document.getElementById("betCount").value || 8));
   const el = document.getElementById("upsetsList");
-  if(!up.length){ el.innerHTML = '<div class="status">No upset-watch games for the current filter.</div>'; return; }
+  if(!up.length){ el.innerHTML = '<div class="status">No live upset-watch games for the current filter.</div>'; return; }
   el.innerHTML = up.map(g=>`
     <div class="card">
       <div class="match">${g.matchup}</div>
@@ -535,7 +501,7 @@ function renderBracket(items){
   items.forEach(g => { byRegion[g.region] = byRegion[g.region] || []; byRegion[g.region].push(g); });
   const el = document.getElementById("bracketList");
   const regions = Object.keys(byRegion).sort();
-  if(!regions.length){ el.innerHTML = '<div class="status">No bracket data available.</div>'; return; }
+  if(!regions.length){ el.innerHTML = '<div class="status">No live bracket data available.</div>'; return; }
   el.innerHTML = regions.map(region => {
     const picks = byRegion[region].slice(0,4).map(g=>`${g.winner} (${g.confidence}%)`).join(" • ");
     return `<div class="mini"><div class="k">${region}</div><div class="v">${region} auto-picks</div><div class="s">${picks}</div></div>`;
@@ -546,11 +512,11 @@ function renderShare(items){
   const top = items.slice(0, Number(document.getElementById("betCount").value || 8));
   const summary = [
     `SnapBracket™`,
-    `Mode: ${MODE}`,
+    `Mode: LIVE ONLY`,
     `Preset: ${activeRisk}`,
     `Top card:`
   ].concat(top.map((g,i)=>`${i+1}. ${g.winner} over ${g.matchup} (${g.confidence}%)`)).join("\n");
-  document.getElementById("shareSummary").textContent = summary;
+  document.getElementById("shareSummary").textContent = top.length ? summary : "No live picks available to export right now.";
 }
 
 function setSection(section){
@@ -574,7 +540,6 @@ function render(){
   const all = allMapped();
   const shown = filteredGames();
   buildTabs(all);
-  document.getElementById("chipMode").textContent = `Mode: ${MODE}`;
   document.getElementById("chipUpdated").textContent = `Updated: ${new Date().toLocaleString()}`;
   document.getElementById("chipGames").textContent = `Games: ${shown.length}`;
   document.getElementById("chipBooks").textContent = `Books: ${Math.max(...all.map(g=>g.books), 0)}`;
@@ -587,20 +552,13 @@ function render(){
 }
 
 async function load(){
-  document.getElementById("statusLine").textContent = "Loading board…";
-  if(MODE === "DEMO"){
-    RAW = DEMO_GAMES;
-    document.getElementById("statusLine").textContent = "Demo board loaded";
-    render();
-    return;
-  }
+  document.getElementById("statusLine").textContent = "Loading live board…";
   try{
     const res = await fetch('/.netlify/functions/odds', {cache:'no-store'});
     const data = await res.json();
     if(!Array.isArray(data) || data.length === 0){
-      MODE = "DEMO";
-      RAW = DEMO_GAMES;
-      document.getElementById("statusLine").textContent = "No live NCAA slate right now — switched to DEMO";
+      RAW = [];
+      document.getElementById("statusLine").textContent = "No live NCAA games available right now";
       render();
       return;
     }
@@ -608,16 +566,10 @@ async function load(){
     document.getElementById("statusLine").textContent = "Live board loaded";
     render();
   }catch(err){
-    MODE = "DEMO";
-    RAW = DEMO_GAMES;
-    document.getElementById("statusLine").textContent = "Live board unavailable — switched to DEMO";
+    RAW = [];
+    document.getElementById("statusLine").textContent = "Live board failed to load";
     render();
   }
-}
-
-function toggleMode(){
-  MODE = MODE === "LIVE" ? "DEMO" : "LIVE";
-  load();
 }
 
 function openLegal(type){
@@ -645,7 +597,6 @@ document.querySelectorAll(".risk").forEach(btn => btn.onclick = ()=>{
 });
 document.querySelectorAll(".section").forEach(btn => btn.onclick = ()=>setSection(btn.dataset.section));
 document.getElementById("refreshBtn").onclick = load;
-document.getElementById("modeBtn").onclick = toggleMode;
 document.getElementById("minConfidence").oninput = render;
 document.getElementById("sortMode").onchange = render;
 document.getElementById("betCount").onchange = render;
