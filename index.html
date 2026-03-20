@@ -1,9 +1,8 @@
 <!doctype html>
 
-<html lang="en">
+<html>
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta charset="utf-8">
 <title>SnapBracket™</title>
 
 <style>
@@ -16,17 +15,7 @@ body{
 
 .top{
   padding:20px;
-  border-bottom:1px solid rgba(255,255,255,.1);
-}
-
-.title{
-  font-size:28px;
-  font-weight:900;
-}
-
-.sub{
-  color:#aaa;
-  font-size:12px;
+  border-bottom:1px solid #222;
 }
 
 .container{
@@ -37,46 +26,29 @@ body{
 }
 
 .panel{
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:12px;
+  border:1px solid #222;
+  border-radius:10px;
   padding:15px;
 }
 
 .btn{
-  display:block;
   width:100%;
   margin-top:10px;
   padding:10px;
-  border:none;
-  border-radius:8px;
   background:#36A3FF;
+  border:none;
   color:white;
-  font-weight:bold;
+  border-radius:8px;
   cursor:pointer;
 }
 
 .card{
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:12px;
-  padding:12px;
+  border:1px solid #222;
+  padding:10px;
+  border-radius:10px;
   margin-bottom:10px;
 }
 
-.legal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.8);
-  display:none;
-  justify-content:center;
-  align-items:center;
-}
-
-.legal-box{
-  background:#111;
-  padding:20px;
-  border-radius:10px;
-  max-width:500px;
-}
 </style>
 
 </head>
@@ -84,92 +56,50 @@ body{
 <body>
 
 <div class="top">
-  <div class="title">SnapBracket™</div>
-  <div class="sub">Vegas-driven picks, totals, confidence</div>
+  <h1>SnapBracket™ LIVE</h1>
 </div>
 
 <div class="container">
 
 <div class="panel">
   <b>Controls</b>
-
-<button class="btn" onclick="showBets()">Best Bets</button> <button class="btn" onclick="showBoard()">Big Board</button> <button class="btn" onclick="openLegal()">Legal</button>
-
+  <button class="btn" onclick="load()">Refresh</button>
 </div>
 
-<div id="content">
+<div id="games"></div>
 
-  <div id="board"></div>
-  <div id="bets" style="display:none"></div>
-
-</div>
-
-</div>
-
-<div class="legal" id="legal">
-  <div class="legal-box">
-    <h3>Terms</h3>
-    <p>This is for entertainment only. No guarantees.</p>
-    <button class="btn" onclick="closeLegal()">Close</button>
-  </div>
 </div>
 
 <script>
 
-function showBoard(){
-  document.getElementById("board").style.display="block";
-  document.getElementById("bets").style.display="none";
-}
+async function load(){
 
-function showBets(){
-  document.getElementById("board").style.display="none";
-  document.getElementById("bets").style.display="block";
-}
+  document.getElementById("games").innerHTML = "Loading...";
 
-function openLegal(){
-  document.getElementById("legal").style.display="flex";
-}
+  try{
 
-function closeLegal(){
-  document.getElementById("legal").style.display="none";
-}
+    const res = await fetch("/.netlify/functions/odds");
+    const data = await res.json();
 
-function load(){
+    let html = "";
 
-  const games = [
-    {match:"Duke vs UNC", pick:"Duke", conf:72},
-    {match:"Arizona vs UCLA", pick:"Arizona", conf:68},
-    {match:"Houston vs Kansas", pick:"Houston", conf:75}
-  ];
+    data.slice(0,20).forEach(g=>{
 
-  const board = document.getElementById("board");
-  const bets = document.getElementById("bets");
-
-  board.innerHTML = "";
-  bets.innerHTML = "";
-
-  games.forEach(g => {
-
-    board.innerHTML += `
-      <div class="card">
-        <b>${g.match}</b><br/>
-        Pick: ${g.pick} (${g.conf}%)
-      </div>
-    `;
-
-  });
-
-  games
-    .filter(g => g.conf >= 70)
-    .forEach(g => {
-
-      bets.innerHTML += `
+      html += `
         <div class="card">
-          🔥 ${g.pick} (${g.conf}%)
+          <b>${g.away_team} vs ${g.home_team}</b>
         </div>
       `;
 
     });
+
+    document.getElementById("games").innerHTML = html;
+
+  }catch(e){
+
+    document.getElementById("games").innerHTML = "Failed to load live data";
+
+  }
 
 }
 
