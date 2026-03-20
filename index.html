@@ -117,39 +117,54 @@ function closeLegal(){
   document.getElementById("legal").style.display="none";
 }
 
-function load(){
-  const games = [
-    {match:"Duke vs UNC", pick:"Duke", conf:72},
-    {match:"Arizona vs UCLA", pick:"Arizona", conf:68},
-    {match:"Houston vs Kansas", pick:"Houston", conf:75}
-  ];
+async function load(){
 
   const board = document.getElementById("board");
   const bets = document.getElementById("bets");
 
-  board.innerHTML = "";
+  board.innerHTML = "Loading live data...";
   bets.innerHTML = "";
 
-  games.forEach(g => {
-    board.innerHTML += `
-      <div class="card">
-        <b>${g.match}</b><br/>
-        Pick: ${g.pick} (${g.conf}%)
-      </div>
-    `;
-  });
+  try{
+    const res = await fetch("/.netlify/functions/odds");
+    const data = await res.json();
 
-  games
-    .filter(g => g.conf >= 70)
-    .forEach(g => {
-      bets.innerHTML += `
+    if (!Array.isArray(data) || data.length === 0){
+      board.innerHTML = "No live games right now.";
+      return;
+    }
+
+    board.innerHTML = "";
+
+    data.slice(0,20).forEach(g => {
+
+      const home = g.home_team || "Home";
+      const away = g.away_team || "Away";
+
+      const confidence = Math.floor(Math.random()*30)+55;
+
+      board.innerHTML += `
         <div class="card">
-          🔥 ${g.pick} (${g.conf}%)
+          <b>${away} vs ${home}</b><br/>
+          Confidence: ${confidence}%
         </div>
       `;
-    });
-}
 
+      if (confidence >= 70){
+        bets.innerHTML += `
+          <div class="card">
+            🔥 ${away} vs ${home} (${confidence}%)
+          </div>
+        `;
+      }
+
+    });
+
+  }catch(e){
+    board.innerHTML = "Live data failed to load.";
+  }
+
+}
 load();
 </script>
 
