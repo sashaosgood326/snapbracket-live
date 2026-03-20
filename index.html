@@ -1,111 +1,36 @@
-<!doctype html>
-
-<html>
-<head>
-<meta charset="utf-8">
-<title>SnapBracket™</title>
-
-<style>
-body{
-  margin:0;
-  font-family:sans-serif;
-  background:#070A12;
-  color:white;
-}
-
-.top{
-  padding:20px;
-  border-bottom:1px solid #222;
-}
-
-.container{
-  display:grid;
-  grid-template-columns:300px 1fr;
-  gap:20px;
-  padding:20px;
-}
-
-.panel{
-  border:1px solid #222;
-  border-radius:10px;
-  padding:15px;
-}
-
-.btn{
-  width:100%;
-  margin-top:10px;
-  padding:10px;
-  background:#36A3FF;
-  border:none;
-  color:white;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.card{
-  border:1px solid #222;
-  padding:10px;
-  border-radius:10px;
-  margin-bottom:10px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="top">
-  <h1>SnapBracket™ LIVE</h1>
-</div>
-
-<div class="container">
-
-<div class="panel">
-  <b>Controls</b>
-  <button class="btn" onclick="load()">Refresh</button>
-</div>
-
-<div id="games"></div>
-
-</div>
-
-<script>
-
 async function load(){
 
-  document.getElementById("games").innerHTML = "Loading...";
+  const gamesEl = document.getElementById("games");
+  gamesEl.innerHTML = '<div class="status">Loading live data...</div>';
 
   try{
-
     const res = await fetch("/.netlify/functions/odds");
     const data = await res.json();
 
+    if (!Array.isArray(data)) {
+      gamesEl.innerHTML = '<div class="status">Failed to load live data.</div>';
+      return;
+    }
+
+    if (data.length === 0) {
+      gamesEl.innerHTML = '<div class="status">No live NCAA games available right now.</div>';
+      return;
+    }
+
     let html = "";
 
-    data.slice(0,20).forEach(g=>{
-
+    data.slice(0,20).forEach(g => {
       html += `
         <div class="card">
           <b>${g.away_team} vs ${g.home_team}</b>
         </div>
       `;
-
     });
 
-    document.getElementById("games").innerHTML = html;
+    gamesEl.innerHTML = html;
 
   }catch(e){
-
-    document.getElementById("games").innerHTML = "Failed to load live data";
-
+    gamesEl.innerHTML = '<div class="status">Failed to load live data.</div>';
   }
 
 }
-
-load();
-
-</script>
-
-</body>
-</html>
