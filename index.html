@@ -1,279 +1,85 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>SnapBracket™</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>SnapBracket™ Reset v1</title>
 <style>
-:root{
-  --bg:#070A12; --panel:#101725; --text:#eef4ff; --muted:#a9b7d1;
-  --blue:#36A3FF; --orange:#FF8A2A; --red:#FF5A4F; --green:#35d07f; --yellow:#facc15;
-  --border:rgba(255,255,255,.10); --shadow:0 18px 40px rgba(0,0,0,.28);
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(1100px 700px at 18% 16%, rgba(54,163,255,.18), transparent 60%),
-    radial-gradient(950px 650px at 82% 24%, rgba(255,138,42,.12), transparent 62%),
-    var(--bg);
-}
-a{color:#d6ebff}
-.hidden{display:none !important}
-.top{
-  position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);
-  background:rgba(7,10,18,.82);border-bottom:1px solid var(--border)
-}
-.wrap{max-width:1560px;margin:0 auto;padding:14px 16px}
+:root{--bg:#070A12;--text:#eef4ff;--muted:#a9b7d1;--blue:#36A3FF;--orange:#FF8A2A;--red:#FF5A4F;--green:#35d07f;--yellow:#facc15;--border:rgba(255,255,255,.10)}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:radial-gradient(1100px 700px at 18% 16%, rgba(54,163,255,.18), transparent 60%),radial-gradient(950px 650px at 82% 24%, rgba(255,138,42,.12), transparent 62%),var(--bg)}
+a{color:#d6ebff}.hidden{display:none!important}
+.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:rgba(7,10,18,.78);border-bottom:1px solid var(--border)}
+.wrap{max-width:1500px;margin:0 auto;padding:14px 16px}
 .brandRow{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-.brandTitle{font-weight:1000;font-size:30px;line-height:1}
-.brandSub{color:var(--muted);font-size:13px;margin-top:4px}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{
-  padding:8px 12px;border:1px solid var(--border);border-radius:999px;
-  color:var(--muted);background:rgba(255,255,255,.03);font-size:12px
-}
-.main{
-  max-width:1560px;margin:0 auto;padding:14px 16px;
-  display:grid;grid-template-columns:330px 1fr;gap:14px
-}
+.brandTitle{font-weight:1000;font-size:30px}.brandSub{color:var(--muted);font-size:13px;margin-top:4px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{padding:8px 12px;border:1px solid var(--border);border-radius:999px;color:var(--muted);background:rgba(255,255,255,.03);font-size:12px}
+.main{max-width:1500px;margin:0 auto;padding:14px 16px;display:grid;grid-template-columns:320px 1fr;gap:14px}
 @media (max-width:1100px){.main{grid-template-columns:1fr}}
-.panel{
-  border:1px solid var(--border);border-radius:18px;overflow:hidden;
-  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-  box-shadow:var(--shadow)
-}
-.panelHd{padding:14px 16px;border-bottom:1px solid var(--border)}
-.panelTitle{font-weight:1000;font-size:18px}
-.panelNote{font-size:12px;color:var(--muted);margin-top:4px}
-.panelBd{padding:14px 16px}
+.panel{border:1px solid var(--border);border-radius:18px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
+.panelHd{padding:14px 16px;border-bottom:1px solid var(--border)}.panelTitle{font-weight:1000;font-size:18px}.panelNote{font-size:12px;color:var(--muted);margin-top:4px}.panelBd{padding:14px 16px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn{
-  background:#0a1222;color:var(--text);border:1px solid var(--border);
-  border-radius:16px;padding:12px 10px;cursor:pointer;font-weight:900
-}
-.btn small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
-.btn.active{
-  outline:2px solid rgba(54,163,255,.35);
-  background:linear-gradient(180deg, rgba(54,163,255,.10), rgba(255,138,42,.05))
-}
-.actions{display:flex;gap:10px;margin-top:10px}
-.field{margin-top:10px}
-.label{font-size:11px;color:var(--muted);margin-bottom:6px}
-.select,input{
-  width:100%;border:1px solid var(--border);border-radius:12px;
-  background:#0a1222;color:var(--text);padding:10px 12px
-}
-.boardTop{
-  display:flex;justify-content:space-between;align-items:center;gap:10px;
-  flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border)
-}
-.tabs{display:flex;gap:8px;overflow:auto;padding:12px 16px 0}
-.tab{
-  border:1px solid var(--border);background:#0a1222;color:var(--muted);
-  border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:900;white-space:nowrap
-}
-.tab.active{
-  outline:2px solid rgba(54,163,255,.25);color:var(--text);
-  background:linear-gradient(180deg, rgba(54,163,255,.14), rgba(255,138,42,.07))
-}
-.games{
-  padding:14px 16px 16px;display:grid;grid-template-columns:repeat(2,minmax(320px,1fr));gap:12px
-}
+.btn{background:#0a1222;color:var(--text);border:1px solid var(--border);border-radius:16px;padding:12px 10px;cursor:pointer;font-weight:900}
+.btn small{display:block;color:var(--muted);font-size:12px;margin-top:4px}.btn.active{outline:2px solid rgba(54,163,255,.35);background:linear-gradient(180deg, rgba(54,163,255,.10), rgba(255,138,42,.05))}
+.actions{display:flex;gap:10px;margin-top:10px}.field{margin-top:10px}.label{font-size:11px;color:var(--muted);margin-bottom:6px}
+.select,input{width:100%;border:1px solid var(--border);border-radius:12px;background:#0a1222;color:var(--text);padding:10px 12px}
+.boardTop{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:14px 16px;border-bottom:1px solid var(--border)}
+.tabs{display:flex;gap:8px;overflow:auto;padding:12px 16px 0}.tab{border:1px solid var(--border);background:#0a1222;color:var(--muted);border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:900;white-space:nowrap}.tab.active{outline:2px solid rgba(54,163,255,.25);color:var(--text);background:linear-gradient(180deg, rgba(54,163,255,.14), rgba(255,138,42,.07))}
+.games{padding:14px 16px 16px;display:grid;grid-template-columns:repeat(2,minmax(320px,1fr));gap:12px}
 @media (max-width:1180px){.games{grid-template-columns:1fr}}
-.card{
-  border:1px solid var(--border);background:rgba(255,255,255,.03);
-  border-radius:18px;padding:12px
-}
+.card{border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:18px;padding:12px}
 .cardTop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.match{font-weight:1000;font-size:20px;line-height:1.18}
-.meta{font-size:12px;color:var(--muted);margin-top:4px}
-.pick{
-  border:1px solid rgba(255,138,42,.25);background:rgba(255,138,42,.12);
-  border-radius:999px;padding:7px 11px;font-size:12px;font-weight:1000
-}
+.match{font-weight:1000;font-size:20px;line-height:1.18}.meta{font-size:12px;color:var(--muted);margin-top:4px}
+.pick{border:1px solid rgba(255,138,42,.25);background:rgba(255,138,42,.12);border-radius:999px;padding:7px 11px;font-size:12px;font-weight:1000}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 @media (max-width:700px){.grid{grid-template-columns:1fr}}
-.mini{border:1px solid var(--border);border-radius:14px;padding:10px;background:rgba(0,0,0,.14)}
-.k{font-size:11px;color:var(--muted)}
-.v{font-size:16px;font-weight:1000;margin-top:2px}
-.s{font-size:11px;color:var(--muted);margin-top:2px}
-.bar{
-  margin-top:6px;height:10px;border-radius:999px;border:1px solid var(--border);
-  overflow:hidden;background:rgba(255,255,255,.05)
-}
-.bar>div{height:100%;background:linear-gradient(90deg,var(--blue),var(--orange),var(--red))}
-.tagRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.tag{
-  font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid var(--border);
-  background:rgba(255,255,255,.04)
-}
-.tag.lock{background:rgba(53,208,127,.10);color:#bff2d5}
-.tag.strong{background:rgba(54,163,255,.10);color:#d7ebff}
-.tag.toss{background:rgba(250,204,21,.10);color:#fff0a6}
-.tag.upset{background:rgba(255,90,79,.12);color:#ffd0cc}
-.list{display:grid;gap:10px;padding:14px 16px 16px}
-.infoCard{
-  border:1px solid rgba(53,208,127,.22);background:rgba(53,208,127,.08);
-  border-radius:16px;padding:12px
-}
-.shareBox{
-  border:1px dashed rgba(255,255,255,.18);border-radius:16px;
-  padding:14px;background:rgba(255,255,255,.03);white-space:pre-wrap
-}
-.status{padding:22px;text-align:center;color:var(--muted)}
-.footer{padding:14px 16px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
-.splash{
-  position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
-  background:
-    radial-gradient(1000px 650px at 22% 18%, rgba(54,163,255,.22), transparent 60%),
-    radial-gradient(950px 650px at 80% 28%, rgba(255,138,42,.16), transparent 62%),
-    radial-gradient(900px 700px at 60% 85%, rgba(255,59,47,.12), transparent 58%),
-    rgba(7,10,18,.98)
-}
-.splashTitle{font-weight:1000;font-size:52px;letter-spacing:.2px}
-.splashSub{color:var(--muted);font-size:16px}
-.splashLegal{max-width:760px;text-align:center;color:var(--muted);font-size:12px;line-height:1.45;padding:0 20px}
-.fadeOut{animation:fadeOut .45s ease forwards}
-@keyframes fadeOut{to{opacity:0;visibility:hidden}}
-.legalModal{
-  display:none;position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.72);
-  backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px
-}
-.legalCard{
-  width:min(760px,100%);max-height:80vh;overflow:auto;border-radius:18px;
-  border:1px solid var(--border);background:rgba(11,15,26,.98);color:var(--text);padding:20px
-}
-.legalCard h3{margin:0 0 10px;font-size:20px}
-.legalCard p,.legalCard li{color:var(--muted);font-size:13px;line-height:1.5}
-.legalClose{
-  margin-top:16px;border:1px solid var(--border);border-radius:12px;
-  background:linear-gradient(180deg, rgba(54,163,255,.18), rgba(255,138,42,.12));
-  color:var(--text);padding:10px 14px;cursor:pointer;font-weight:900;font-size:13px
-}
+.mini{border:1px solid var(--border);border-radius:14px;padding:10px;background:rgba(0,0,0,.14)}.k{font-size:11px;color:var(--muted)}.v{font-size:16px;font-weight:1000;margin-top:2px}.s{font-size:11px;color:var(--muted);margin-top:2px}
+.bar{margin-top:6px;height:10px;border-radius:999px;border:1px solid var(--border);overflow:hidden;background:rgba(255,255,255,.05)}.bar>div{height:100%;background:linear-gradient(90deg,var(--blue),var(--orange),var(--red))}
+.tagRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.tag{font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,.04)}.lock{background:rgba(53,208,127,.10);color:#bff2d5}.strong{background:rgba(54,163,255,.10);color:#d7ebff}.toss{background:rgba(250,204,21,.10);color:#fff0a6}.upset{background:rgba(255,90,79,.12);color:#ffd0cc}
+.list{display:grid;gap:10px;padding:14px 16px 16px}.infoCard{border:1px solid rgba(53,208,127,.22);background:rgba(53,208,127,.08);border-radius:16px;padding:12px}.shareBox{border:1px dashed rgba(255,255,255,.18);border-radius:16px;padding:14px;background:rgba(255,255,255,.03)}
+.status{padding:22px;text-align:center;color:var(--muted)}.footer{padding:14px 16px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
+.splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:radial-gradient(1000px 650px at 22% 18%, rgba(54,163,255,.22), transparent 60%),radial-gradient(950px 650px at 80% 28%, rgba(255,138,42,.16), transparent 62%),radial-gradient(900px 700px at 60% 85%, rgba(255,59,47,.12), transparent 58%),rgba(7,10,18,.98)}
+.splashTitle{font-weight:1000;font-size:52px}.splashSub{color:var(--muted);font-size:16px}.splashLegal{max-width:760px;text-align:center;color:var(--muted);font-size:12px;line-height:1.45;padding:0 20px}.fadeOut{animation:fadeOut .45s ease forwards}@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+.legalModal{display:none;position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px}.legalCard{width:min(760px,100%);max-height:80vh;overflow:auto;border-radius:18px;border:1px solid var(--border);background:rgba(11,15,26,.98);color:var(--text);padding:20px}.legalCard h3{margin:0 0 10px;font-size:20px}.legalCard p{color:var(--muted);font-size:13px;line-height:1.5}.legalClose{margin-top:16px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg, rgba(54,163,255,.18), rgba(255,138,42,.12));color:var(--text);padding:10px 14px;cursor:pointer;font-weight:900;font-size:13px}
 </style>
 </head>
 <body>
 <div id="splash" class="splash">
   <div class="splashTitle">SnapBracket™</div>
-  <div class="splashSub">Live NCAA board with picks, best bets, upset watch, auto-bracket, and share view.</div>
+  <div class="splashSub">Polished 2026 men’s tournament board with live odds where available.</div>
   <div class="splashLegal">By continuing, you acknowledge that SnapBracket™ is proprietary to Sasha G. Osgood and is provided for informational and entertainment purposes only. It is not betting, gambling, financial, or legal advice.</div>
 </div>
 
-<div class="top">
-  <div class="wrap brandRow">
-    <div>
-      <div class="brandTitle">SnapBracket™</div>
-      <div class="brandSub">Live NCAA board with picks, best bets, upset watch, auto-bracket, and share view.</div>
-    </div>
-    <div class="chips">
-      <span class="chip">Mode: LIVE ONLY</span>
-      <span class="chip" id="chipUpdated">Updated: —</span>
-      <span class="chip" id="chipGames">Games: —</span>
-      <span class="chip" id="chipBooks">Books: —</span>
-      <span class="chip" id="chipVersion">Build: Live Only 1.0</span>
-    </div>
-  </div>
-</div>
+<div class="top"><div class="wrap brandRow"><div><div class="brandTitle">SnapBracket™</div><div class="brandSub">Polished product edition • live data when available • professional fallback when unavailable.</div></div><div class="chips"><span class="chip" id="chipMode">Mode: LIVE</span><span class="chip" id="chipUpdated">Updated: —</span><span class="chip" id="chipGames">Games: —</span><span class="chip" id="chipBooks">Books: —</span><span class="chip" id="chipVersion">Build: Reset v1</span></div></div></div>
 
 <div class="main">
   <div class="panel">
-    <div class="panelHd">
-      <div class="panelTitle">Control Center</div>
-      <div class="panelNote">Live information only. No demo fallback.</div>
-    </div>
+    <div class="panelHd"><div class="panelTitle">Control Center</div><div class="panelNote">Tournament presets, clean views, and a stable sendable product.</div></div>
     <div class="panelBd">
-      <div class="label">Bracket presets</div>
+      <div class="label">Bracket mode preset</div>
       <div class="grid2">
-        <button class="btn risk" data-risk="CHALK">Chalk<small>Safer favorites</small></button>
-        <button class="btn risk active" data-risk="BALANCED">Balanced<small>Default tournament build</small></button>
+        <button class="btn risk active" data-risk="CHALK">Chalk<small>Safer favorites</small></button>
+        <button class="btn risk" data-risk="BALANCED">Balanced<small>Default tournament build</small></button>
         <button class="btn risk" data-risk="CHAOS">Chaos<small>More upset appetite</small></button>
         <button class="btn risk" data-risk="CUSTOM">Custom<small>Current ruleset</small></button>
       </div>
-
-      <div class="field">
-        <div class="label">View</div>
-        <div class="grid2">
-          <button class="btn section active" data-section="board">Big Board</button>
-          <button class="btn section" data-section="bets">Best Bets</button>
-          <button class="btn section" data-section="upsets">Upset Watch</button>
-          <button class="btn section" data-section="bracket">Auto Bracket</button>
-        </div>
-        <div class="actions">
-          <button class="btn section" data-section="share">My Card / Share</button>
-          <button class="btn section" data-section="settings">Settings</button>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="label">Minimum confidence</div>
-        <input id="minConfidence" class="select" type="number" min="50" max="99" step="1" value="50"/>
-      </div>
-
-      <div class="field">
-        <div class="label">Sort by</div>
-        <select id="sortMode" class="select">
-          <option value="edge">Consensus edge</option>
-          <option value="confidence">Confidence</option>
-          <option value="alphabetical">Alphabetical</option>
-          <option value="total_high">Highest total</option>
-          <option value="spread_big">Biggest spread</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <div class="label">Card count</div>
-        <select id="betCount" class="select">
-          <option>5</option><option selected>8</option><option>10</option>
-        </select>
-      </div>
-
-      <div class="actions">
-        <button class="btn" id="refreshBtn">Refresh</button>
-      </div>
-
-      <div class="actions">
-        <button class="btn" id="termsBtn">Terms</button>
-        <button class="btn" id="privacyBtn">Privacy</button>
-      </div>
+      <div class="field"><div class="label">View</div><div class="grid2"><button class="btn section active" data-section="board">Big Board</button><button class="btn section" data-section="bets">Best Bets</button><button class="btn section" data-section="upsets">Upset Watch</button><button class="btn section" data-section="bracket">Auto Bracket</button></div><div class="actions"><button class="btn section" data-section="share">My Card / Share</button><button class="btn section" data-section="settings">Settings</button></div></div>
+      <div class="field"><div class="label">Minimum confidence</div><input id="minConfidence" class="select" type="number" min="50" max="99" step="1" value="50"/></div>
+      <div class="field"><div class="label">Sort by</div><select id="sortMode" class="select"><option value="edge">Consensus edge</option><option value="confidence">Confidence</option><option value="alphabetical">Alphabetical</option><option value="total_high">Highest total</option><option value="spread_big">Biggest spread</option></select></div>
+      <div class="field"><div class="label">Card count</div><select id="betCount" class="select"><option>5</option><option selected>8</option><option>10</option></select></div>
+      <div class="actions"><button class="btn" id="refreshBtn">Refresh</button></div>
+      <div class="actions"><button class="btn" id="termsBtn">Terms</button><button class="btn" id="privacyBtn">Privacy</button></div>
     </div>
   </div>
 
   <div class="panel">
-    <div class="boardTop">
-      <div>
-        <div class="panelTitle" id="sectionTitle">Big Board</div>
-        <div class="panelNote" id="statusLine">Loading live board…</div>
-      </div>
-      <div class="chips">
-        <span class="chip" id="chipRisk">Risk: BALANCED</span>
-        <span class="chip">Source: Odds API</span>
-      </div>
-    </div>
-
-    <div id="boardSection">
-      <div class="tabs" id="tabs"></div>
-      <div class="games" id="games"><div class="status">Loading…</div></div>
-    </div>
-
+    <div class="boardTop"><div><div class="panelTitle" id="sectionTitle">Big Board</div><div class="panelNote" id="statusLine">Loading board…</div></div><div class="chips"><span class="chip" id="chipRisk">Preset: CHALK</span><span class="chip">Source: Odds API</span></div></div>
+    <div id="boardSection"><div class="tabs" id="tabs"></div><div class="games" id="games"><div class="status">Loading…</div></div></div>
     <div id="betsSection" class="hidden"><div class="list" id="betsList"><div class="status">Loading…</div></div></div>
     <div id="upsetsSection" class="hidden"><div class="list" id="upsetsList"><div class="status">Loading…</div></div></div>
     <div id="bracketSection" class="hidden"><div class="list" id="bracketList"><div class="status">Loading…</div></div></div>
-    <div id="shareSection" class="hidden">
-      <div class="list">
-        <div class="shareBox" id="shareSummary">Loading…</div>
-        <div><button class="btn" id="copySummaryBtn">Copy Summary</button></div>
-      </div>
-    </div>
-    <div id="settingsSection" class="hidden">
-      <div class="list">
-        <div class="mini"><div class="k">Build status</div><div class="v">Live-only product shell</div><div class="s">Premium splash, live board, best bets, upset watch, auto-bracket, share view, bracket presets, polished legal layer.</div></div>
-        <div class="mini"><div class="k">Live behavior</div><div class="v">No demo fallback</div><div class="s">If the NCAA odds endpoint is empty or unavailable, the app will clearly say so instead of switching to demo.</div></div>
-      </div>
-    </div>
-
+    <div id="shareSection" class="hidden"><div class="list"><div class="shareBox"><div class="k">My Card / Share view</div><div class="v">Exportable summary</div><div class="s" id="shareSummary">Loading…</div></div><div><button class="btn" id="copySummaryBtn">Copy Summary</button></div></div></div>
+    <div id="settingsSection" class="hidden"><div class="list"><div class="mini"><div class="k">Build status</div><div class="v">Polished Product Reset</div><div class="s">Premium splash, Big Board, Best Bets, Upset Watch, Auto Bracket, My Card / Share, bracket presets, ownership and legal layer, and a stable public-facing shell.</div></div><div class="mini"><div class="k">Live-data behavior</div><div class="v">Honest fallback</div><div class="s">This build uses live NCAAB odds when available. If the feed is empty or unavailable, the app remains professional and usable while telling the truth about data availability.</div></div></div></div>
     <div class="footer">© 2026 Sasha G. Osgood. All rights reserved. SnapBracket™ is proprietary. <a href="#" id="footerTerms">Terms</a> • <a href="#" id="footerPrivacy">Privacy</a> • Entertainment use only.</div>
   </div>
 </div>
@@ -281,354 +87,36 @@ a{color:#d6ebff}
 <div class="legalModal" id="legalModal"><div class="legalCard"><div id="legalContent"></div><button class="legalClose" onclick="closeLegal()">Close</button></div></div>
 
 <script>
-let RAW = [];
-let activeRisk = "BALANCED";
-let activeTab = "All";
-let activeSection = "board";
-
-function impliedProb(d){ return d>1 ? 1/d : 0.5; }
-function round1(x){ return Math.round(x*10)/10; }
-
-function normalizeH2H(outcomes){
-  if(!outcomes || outcomes.length < 2) return null;
-  const p0 = impliedProb(Number(outcomes[0].price));
-  const p1 = impliedProb(Number(outcomes[1].price));
-  const total = p0 + p1 || 1;
-  return [{name:outcomes[0].name,p:p0/total},{name:outcomes[1].name,p:p1/total}];
-}
-
-function getBooks(game){ return game.bookmakers || []; }
-
-function getMarket(game, key){
-  for(const b of getBooks(game)){
-    const m = (b.markets || []).find(x => x.key === key);
-    if(m) return m;
-  }
-  return null;
-}
-
-function collectBookTotals(game){
-  const vals = [];
-  for(const b of getBooks(game)){
-    const m = (b.markets || []).find(x => x.key === "totals");
-    if(m && m.outcomes && m.outcomes[0] && m.outcomes[0].point != null) vals.push(Number(m.outcomes[0].point));
-  }
-  return vals;
-}
-
-function collectBookSpreads(game){
-  const vals = [];
-  for(const b of getBooks(game)){
-    const m = (b.markets || []).find(x => x.key === "spreads");
-    if(m && m.outcomes){
-      const fav = m.outcomes.find(x => Number(x.point) < 0);
-      if(fav) vals.push({name:fav.name, point:Number(fav.point)});
-    }
-  }
-  return vals;
-}
-
-function consensusTotal(game){
-  const vals = collectBookTotals(game);
-  return vals.length ? round1(vals.reduce((a,b)=>a+b,0)/vals.length) : null;
-}
-
-function consensusSpread(game){
-  const vals = collectBookSpreads(game);
-  if(!vals.length) return null;
-  const map = {};
-  vals.forEach(v => { map[v.name] = map[v.name] || []; map[v.name].push(v.point); });
-  let bestName = Object.keys(map)[0], bestCount = map[bestName].length;
-  for(const k of Object.keys(map)){ if(map[k].length > bestCount){ bestName = k; bestCount = map[k].length; } }
-  return {name:bestName, point:round1(map[bestName].reduce((a,b)=>a+b,0)/map[bestName].length)};
-}
-
-function regionFor(game){
-  const text = ((game.home_team || "") + " " + (game.away_team || "")).toLowerCase();
-  const names = {
-    "duke":"East","uconn":"East","ucla":"East","kansas":"East","ohio":"East","louisville":"East","st. john":"East","villanova":"East",
-    "arizona":"West","purdue":"West","gonzaga":"West","wisconsin":"West","arkansas":"West","miami":"West","missouri":"West",
-    "houston":"South","illinois":"South","north carolina":"South","saint mary":"South","clemson":"South","iowa":"South","vanderbilt":"South","nebraska":"South",
-    "iowa state":"Midwest","virginia":"Midwest","kentucky":"Midwest","georgia":"Midwest","texas tech":"Midwest","alabama":"Midwest"
-  };
-  for(const k in names){ if(text.includes(k)) return names[k]; }
-  return "All";
-}
-
-function classify(conf){
-  if(conf >= 75) return {label:"LOCK", cls:"lock"};
-  if(conf >= 65) return {label:"STRONG", cls:"strong"};
-  if(conf >= 55) return {label:"TOSS-UP", cls:"toss"};
-  return {label:"UPSET", cls:"upset"};
-}
-
-function applyRisk(conf, winner, alt){
-  if(activeRisk === "CHALK") return {winner, conf: Math.min(conf + 4, 95)};
-  if(activeRisk === "CHAOS"){
-    const c = conf <= 66 ? Math.max(54, 100 - conf) : Math.max(52, conf - 8);
-    const w = conf <= 66 ? alt : winner;
-    return {winner:w, conf:c};
-  }
-  if(activeRisk === "CUSTOM") return {winner, conf: Math.max(52, conf)};
-  return {winner, conf};
-}
-
-function mapGame(game){
-  const h2h = getMarket(game, "h2h");
-  const probs = h2h ? normalizeH2H(h2h.outcomes) : null;
-  if(!probs) return null;
-
-  let winner = probs[0].p >= probs[1].p ? probs[0].name : probs[1].name;
-  let alt = probs[0].p < probs[1].p ? probs[0].name : probs[1].name;
-  let confidence = Math.round(Math.max(probs[0].p, probs[1].p) * 100);
-
-  const total = consensusTotal(game);
-  const spread = consensusSpread(game);
-  const books = getBooks(game).length;
-  const riskAdj = applyRisk(confidence, winner, alt);
-  confidence = riskAdj.conf;
-  winner = riskAdj.winner;
-
-  const edge = round1((confidence - 50) + (books * 0.8));
-  const tag = classify(confidence);
-
-  return {
-    id:game.id,
-    region:regionFor(game),
-    matchup:`${game.away_team} vs ${game.home_team}`,
-    winner,
-    confidence,
-    total: total ?? "—",
-    spread: spread ? `${spread.name} ${spread.point}` : "—",
-    books,
-    edge,
-    tag,
-    why:`${winner} leads on normalized h2h probability with ${books} bookmaker source(s).`,
-    updated:game.commence_time
-  };
-}
-
-function allMapped(){ return RAW.map(mapGame).filter(Boolean); }
-
-function filteredGames(){
-  let items = allMapped().filter(g => g.confidence >= Number(document.getElementById("minConfidence").value || 50));
-  if(activeTab !== "All") items = items.filter(g => g.region === activeTab);
-  const sort = document.getElementById("sortMode").value;
-  if(sort === "edge") items.sort((a,b)=>b.edge-a.edge);
-  if(sort === "confidence") items.sort((a,b)=>b.confidence-a.confidence);
-  if(sort === "alphabetical") items.sort((a,b)=>a.matchup.localeCompare(b.matchup));
-  if(sort === "total_high") items.sort((a,b)=>(Number(b.total)||0)-(Number(a.total)||0));
-  if(sort === "spread_big") items.sort((a,b)=>Math.abs(parseFloat(String(b.spread).split(" ").pop())||0)-Math.abs(parseFloat(String(a.spread).split(" ").pop())||0));
-  return items;
-}
-
-function buildTabs(items){
-  const tabs = ["All"].concat(Array.from(new Set(items.map(x=>x.region).filter(x=>x!=="All"))));
-  const el = document.getElementById("tabs");
-  el.innerHTML = "";
-  tabs.forEach(tab=>{
-    const b = document.createElement("button");
-    b.className = "tab" + (tab===activeTab ? " active" : "");
-    b.textContent = tab;
-    b.onclick = ()=>{ activeTab = tab; render(); };
-    el.appendChild(b);
-  });
-}
-
-function renderBoard(items){
-  const el = document.getElementById("games");
-  if(!items.length){
-    el.innerHTML = '<div class="status">No live NCAA games available right now.</div>';
-    return;
-  }
-  el.innerHTML = items.map(g => `
-    <div class="card">
-      <div class="cardTop">
-        <div>
-          <div class="match">${g.matchup}</div>
-          <div class="meta">${g.region} • Spread: ${g.spread} • Total: ${g.total}</div>
-          <div class="tagRow"><span class="tag ${g.tag.cls}">${g.tag.label}</span></div>
-        </div>
-        <div class="pick">${g.winner} • ${g.confidence}%</div>
-      </div>
-      <div class="grid">
-        <div class="mini">
-          <div class="k">Predicted winner</div>
-          <div class="v">${g.winner}</div>
-          <div class="s">${g.why}</div>
-        </div>
-        <div class="mini">
-          <div class="k">Confidence</div>
-          <div class="v">${g.confidence}%</div>
-          <div class="bar"><div style="width:${g.confidence}%"></div></div>
-          <div class="s">${g.tag.label} grade</div>
-        </div>
-        <div class="mini">
-          <div class="k">Spread / Total</div>
-          <div class="v">${g.spread}</div>
-          <div class="s">Total: ${g.total}</div>
-        </div>
-        <div class="mini">
-          <div class="k">Consensus edge</div>
-          <div class="v">${g.edge}</div>
-          <div class="s">${g.books} book(s) scanned</div>
-        </div>
-      </div>
-    </div>
-  `).join("");
-}
-
-function renderBets(items){
-  const count = Number(document.getElementById("betCount").value || 8);
-  const top = items.filter(g => g.confidence >= 65).slice(0, count);
-  const el = document.getElementById("betsList");
-  if(!top.length){ el.innerHTML = '<div class="status">No live best bets for the current filter.</div>'; return; }
-  el.innerHTML = top.map((g,i)=>`
-    <div class="infoCard">
-      <div class="v">#${i+1} • ${g.winner} • ${g.confidence}% • ${g.tag.label}</div>
-      <div class="meta">${g.matchup}</div>
-      <div class="meta">Spread: ${g.spread} • Total: ${g.total} • Edge: ${g.edge}</div>
-    </div>
-  `).join("");
-}
-
-function renderUpsets(items){
-  const up = items.filter(g => g.tag.label === "UPSET" || g.tag.label === "TOSS-UP").slice(0, Number(document.getElementById("betCount").value || 8));
-  const el = document.getElementById("upsetsList");
-  if(!up.length){ el.innerHTML = '<div class="status">No live upset-watch games for the current filter.</div>'; return; }
-  el.innerHTML = up.map(g=>`
-    <div class="card">
-      <div class="match">${g.matchup}</div>
-      <div class="meta">${g.region}</div>
-      <div class="tagRow"><span class="tag ${g.tag.cls}">${g.tag.label}</span></div>
-      <div class="meta">${g.why}</div>
-    </div>
-  `).join("");
-}
-
-function renderBracket(items){
-  const byRegion = {};
-  items.forEach(g => { byRegion[g.region] = byRegion[g.region] || []; byRegion[g.region].push(g); });
-  const el = document.getElementById("bracketList");
-  const regions = Object.keys(byRegion).sort();
-  if(!regions.length){ el.innerHTML = '<div class="status">No live bracket data available.</div>'; return; }
-  el.innerHTML = regions.map(region => {
-    const picks = byRegion[region].slice(0,4).map(g=>`${g.winner} (${g.confidence}%)`).join(" • ");
-    return `<div class="mini"><div class="k">${region}</div><div class="v">${region} auto-picks</div><div class="s">${picks}</div></div>`;
-  }).join("");
-}
-
-function renderShare(items){
-  const top = items.slice(0, Number(document.getElementById("betCount").value || 8));
-  const summary = [
-    `SnapBracket™`,
-    `Mode: LIVE ONLY`,
-    `Preset: ${activeRisk}`,
-    `Top card:`
-  ].concat(top.map((g,i)=>`${i+1}. ${g.winner} over ${g.matchup} (${g.confidence}%)`)).join("\n");
-  document.getElementById("shareSummary").textContent = top.length ? summary : "No live picks available to export right now.";
-}
-
-function setSection(section){
-  activeSection = section;
-  document.querySelectorAll(".section").forEach(b=>b.classList.toggle("active", b.dataset.section===section));
-  document.getElementById("boardSection").classList.toggle("hidden", section!=="board");
-  document.getElementById("betsSection").classList.toggle("hidden", section!=="bets");
-  document.getElementById("upsetsSection").classList.toggle("hidden", section!=="upsets");
-  document.getElementById("bracketSection").classList.toggle("hidden", section!=="bracket");
-  document.getElementById("shareSection").classList.toggle("hidden", section!=="share");
-  document.getElementById("settingsSection").classList.toggle("hidden", section!=="settings");
-  document.getElementById("sectionTitle").textContent =
-    section==="board" ? "Big Board" :
-    section==="bets" ? "Best Bets" :
-    section==="upsets" ? "Upset Watch" :
-    section==="bracket" ? "Auto Bracket" :
-    section==="share" ? "My Card / Share" : "Settings";
-}
-
-function render(){
-  const all = allMapped();
-  const shown = filteredGames();
-  buildTabs(all);
-  document.getElementById("chipUpdated").textContent = `Updated: ${new Date().toLocaleString()}`;
-  document.getElementById("chipGames").textContent = `Games: ${shown.length}`;
-  document.getElementById("chipBooks").textContent = `Books: ${Math.max(...all.map(g=>g.books), 0)}`;
-  document.getElementById("chipRisk").textContent = `Risk: ${activeRisk}`;
-  renderBoard(shown);
-  renderBets(shown);
-  renderUpsets(shown);
-  renderBracket(shown);
-  renderShare(shown);
-}
-
-async function load(){
-  document.getElementById("statusLine").textContent = "Loading live board…";
-  try{
-    const res = await fetch('/.netlify/functions/odds', {cache:'no-store'});
-    const data = await res.json();
-    if(!Array.isArray(data) || data.length === 0){
-      RAW = [];
-      document.getElementById("statusLine").textContent = "No live NCAA games available right now";
-      render();
-      return;
-    }
-    RAW = data;
-    document.getElementById("statusLine").textContent = "Live board loaded";
-    render();
-  }catch(err){
-    RAW = [];
-    document.getElementById("statusLine").textContent = "Live board failed to load";
-    render();
-  }
-}
-
-function openLegal(type){
-  const content = document.getElementById("legalContent");
-  if(type === "terms"){
-    content.innerHTML = `<h3>Terms of Service</h3>
-      <p><b>SnapBracket™</b> is owned and operated exclusively by <b>Sasha G. Osgood</b>. All branding, design, interface elements, predictive logic, and related intellectual property are proprietary.</p>
-      <p>SnapBracket™ provides predictive analytics, projected winners, totals, confidence indicators, bracket suggestions, and summary exports for informational and entertainment purposes only. It does not constitute betting, gambling, financial, legal, or professional advice.</p>
-      <p>By using SnapBracket™, you agree that you are solely responsible for any decisions you make based on the information displayed.</p>`;
-  } else {
-    content.innerHTML = `<h3>Privacy Policy</h3>
-      <p><b>SnapBracket™</b> currently does not collect, store, sell, or monetize personal user data in this version of the application.</p>
-      <p>Any sharing actions rely on your device and platform’s native tools. If future versions add accounts, analytics, or subscriptions, this policy may be updated.</p>`;
-  }
-  document.getElementById("legalModal").style.display = "flex";
-}
-
-function closeLegal(){ document.getElementById("legalModal").style.display = "none"; }
-
-document.querySelectorAll(".risk").forEach(btn => btn.onclick = ()=>{
-  document.querySelectorAll(".risk").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-  activeRisk = btn.dataset.risk.toUpperCase();
-  render();
-});
-document.querySelectorAll(".section").forEach(btn => btn.onclick = ()=>setSection(btn.dataset.section));
-document.getElementById("refreshBtn").onclick = load;
-document.getElementById("minConfidence").oninput = render;
-document.getElementById("sortMode").onchange = render;
-document.getElementById("betCount").onchange = render;
-document.getElementById("termsBtn").onclick = ()=>openLegal("terms");
-document.getElementById("privacyBtn").onclick = ()=>openLegal("privacy");
-document.getElementById("footerTerms").onclick = (e)=>{e.preventDefault(); openLegal("terms");};
-document.getElementById("footerPrivacy").onclick = (e)=>{e.preventDefault(); openLegal("privacy");};
-document.getElementById("copySummaryBtn").onclick = async ()=>{
-  const txt = document.getElementById("shareSummary").textContent;
-  try{ await navigator.clipboard.writeText(txt); alert("Summary copied"); }
-  catch(e){ alert("Copy failed"); }
-};
-
-setSection("board");
-setTimeout(()=>{
-  const splash = document.getElementById("splash");
-  splash.classList.add("fadeOut");
-  setTimeout(()=>splash.remove(), 500);
-}, 1800);
-
-setInterval(load, 60000);
-load();
+let RAW=[], LIVE_AVAILABLE=false, activeRisk="CHALK", activeTab="All", activeSection="board";
+const FALLBACK_GAMES=[{id:"f1",home_team:"Duke",away_team:"UNC",demo_conf:76,demo_total:151.5,demo_spread:"Duke -6.5",commence_time:new Date().toISOString()},{id:"f2",home_team:"Arizona",away_team:"UCLA",demo_conf:68,demo_total:145.5,demo_spread:"Arizona -4.5",commence_time:new Date().toISOString()},{id:"f3",home_team:"Houston",away_team:"Kansas",demo_conf:74,demo_total:139.5,demo_spread:"Houston -5.5",commence_time:new Date().toISOString()},{id:"f4",home_team:"UConn",away_team:"Villanova",demo_conf:79,demo_total:147.5,demo_spread:"UConn -7.5",commence_time:new Date().toISOString()},{id:"f5",home_team:"Gonzaga",away_team:"Saint Mary's",demo_conf:64,demo_total:142.5,demo_spread:"Gonzaga -2.5",commence_time:new Date().toISOString()},{id:"f6",home_team:"Iowa State",away_team:"Texas Tech",demo_conf:61,demo_total:136.5,demo_spread:"Iowa State -1.5",commence_time:new Date().toISOString()},{id:"f7",home_team:"Purdue",away_team:"Wisconsin",demo_conf:70,demo_total:149.5,demo_spread:"Purdue -5.5",commence_time:new Date().toISOString()},{id:"f8",home_team:"Alabama",away_team:"Kentucky",demo_conf:58,demo_total:162.5,demo_spread:"Alabama -1.5",commence_time:new Date().toISOString()}];
+function impliedProb(d){return d>1?1/d:0.5} function round1(x){return Math.round(x*10)/10}
+function normalizeH2H(outcomes){if(!outcomes||outcomes.length<2)return null;const p0=impliedProb(Number(outcomes[0].price)),p1=impliedProb(Number(outcomes[1].price)),total=p0+p1||1;return[{name:outcomes[0].name,p:p0/total},{name:outcomes[1].name,p:p1/total}]}
+function getBooks(game){return game.bookmakers||[]} function getMarket(game,key){for(const b of getBooks(game)){const m=(b.markets||[]).find(x=>x.key===key);if(m)return m}return null}
+function collectBookTotals(game){const vals=[];for(const b of getBooks(game)){const m=(b.markets||[]).find(x=>x.key==="totals");if(m&&m.outcomes&&m.outcomes[0]&&m.outcomes[0].point!=null)vals.push(Number(m.outcomes[0].point))}return vals}
+function collectBookSpreads(game){const vals=[];for(const b of getBooks(game)){const m=(b.markets||[]).find(x=>x.key==="spreads");if(m&&m.outcomes){const fav=m.outcomes.find(x=>Number(x.point)<0);if(fav)vals.push({name:fav.name,point:Number(fav.point)})}}return vals}
+function consensusTotal(game){const vals=collectBookTotals(game);return vals.length?round1(vals.reduce((a,b)=>a+b,0)/vals.length):null}
+function consensusSpread(game){const vals=collectBookSpreads(game);if(!vals.length)return null;const map={};vals.forEach(v=>{map[v.name]=map[v.name]||[];map[v.name].push(v.point)});let bestName=Object.keys(map)[0],bestCount=map[bestName].length;for(const k of Object.keys(map)){if(map[k].length>bestCount){bestName=k;bestCount=map[k].length}}return{name:bestName,point:round1(map[bestName].reduce((a,b)=>a+b,0)/map[bestName].length)}}
+function regionFor(game){const text=((game.home_team||"")+" "+(game.away_team||"")).toLowerCase();const names={"duke":"East","uconn":"East","ucla":"East","kansas":"East","ohio":"East","louisville":"East","st. john":"East","villanova":"East","arizona":"West","purdue":"West","gonzaga":"West","wisconsin":"West","arkansas":"West","miami":"West","missouri":"West","houston":"South","illinois":"South","north carolina":"South","saint mary":"South","clemson":"South","iowa":"South","vanderbilt":"South","nebraska":"South","iowa state":"Midwest","virginia":"Midwest","kentucky":"Midwest","georgia":"Midwest","texas tech":"Midwest","alabama":"Midwest"};for(const k in names){if(text.includes(k))return names[k]}return"All"}
+function classify(conf){if(conf>=75)return{label:"LOCK",cls:"lock"};if(conf>=65)return{label:"STRONG",cls:"strong"};if(conf>=55)return{label:"TOSS-UP",cls:"toss"};return{label:"UPSET",cls:"upset"}}
+function applyRisk(conf,winner,alt){if(activeRisk==="CHALK")return{winner,conf:Math.min(conf+4,95)};if(activeRisk==="CHAOS"){const c=conf<=66?Math.max(54,100-conf):Math.max(52,conf-8);const w=conf<=66?alt:winner;return{winner:w,conf:c}};if(activeRisk==="CUSTOM")return{winner,conf:Math.max(52,conf)};return{winner,conf}}
+function mapGame(game){if(game.demo_conf){const winner=game.home_team,alt=game.away_team,riskAdj=applyRisk(game.demo_conf,winner,alt),tag=classify(riskAdj.conf);return{id:game.id,region:regionFor(game),matchup:`${game.away_team} vs ${game.home_team}`,winner:riskAdj.winner,confidence:riskAdj.conf,total:game.demo_total,spread:game.demo_spread,books:0,edge:round1((riskAdj.conf-50)+3),tag,why:"Fallback board item used because live tournament data is unavailable right now.",updated:game.commence_time}}const h2h=getMarket(game,"h2h"),probs=h2h?normalizeH2H(h2h.outcomes):null;if(!probs)return null;let winner=probs[0].p>=probs[1].p?probs[0].name:probs[1].name,alt=probs[0].p<probs[1].p?probs[0].name:probs[1].name,confidence=Math.round(Math.max(probs[0].p,probs[1].p)*100);const total=consensusTotal(game),spread=consensusSpread(game),books=getBooks(game).length,riskAdj=applyRisk(confidence,winner,alt);confidence=riskAdj.conf;winner=riskAdj.winner;const edge=round1((confidence-50)+(books*0.8)),tag=classify(confidence);return{id:game.id,region:regionFor(game),matchup:`${game.away_team} vs ${game.home_team}`,winner,confidence,total:total??"—",spread:spread?`${spread.name} ${spread.point}`:"—",books,edge,tag,why:`${winner} leads on normalized h2h probability with ${books} bookmaker source(s).`,updated:game.commence_time}}
+function allMapped(){return RAW.map(mapGame).filter(Boolean)}
+function filteredGames(){let items=allMapped().filter(g=>g.confidence>=Number(document.getElementById("minConfidence").value||50));if(activeTab!=="All")items=items.filter(g=>g.region===activeTab);const sort=document.getElementById("sortMode").value;if(sort==="edge")items.sort((a,b)=>b.edge-a.edge);if(sort==="confidence")items.sort((a,b)=>b.confidence-a.confidence);if(sort==="alphabetical")items.sort((a,b)=>a.matchup.localeCompare(b.matchup));if(sort==="total_high")items.sort((a,b)=>(Number(b.total)||0)-(Number(a.total)||0));if(sort==="spread_big")items.sort((a,b)=>Math.abs(parseFloat(String(b.spread).split(" ").pop())||0)-Math.abs(parseFloat(String(a.spread).split(" ").pop())||0));return items}
+function buildTabs(items){const tabs=["All"].concat(Array.from(new Set(items.map(x=>x.region).filter(x=>x!=="All"))));const el=document.getElementById("tabs");el.innerHTML="";tabs.forEach(tab=>{const b=document.createElement("button");b.className="tab"+(tab===activeTab?" active":"");b.textContent=tab;b.onclick=()=>{activeTab=tab;render()};el.appendChild(b)})}
+function renderBoard(items){const el=document.getElementById("games");if(!items.length){el.innerHTML='<div class="status">No board items available for this filter.</div>';return}el.innerHTML=items.map(g=>`<div class="card"><div class="cardTop"><div><div class="match">${g.matchup}</div><div class="meta">${g.region} • Spread: ${g.spread} • Total: ${g.total}</div><div class="tagRow"><span class="tag ${g.tag.cls}">${g.tag.label}</span></div></div><div class="pick">${g.winner} • ${g.confidence}%</div></div><div class="grid"><div class="mini"><div class="k">Predicted winner</div><div class="v">${g.winner}</div><div class="s">${g.why}</div></div><div class="mini"><div class="k">Confidence</div><div class="v">${g.confidence}%</div><div class="bar"><div style="width:${g.confidence}%"></div></div><div class="s">${g.tag.label} grade</div></div><div class="mini"><div class="k">Spread / Total</div><div class="v">${g.spread}</div><div class="s">Total: ${g.total}</div></div><div class="mini"><div class="k">Consensus edge</div><div class="v">${g.edge}</div><div class="s">${g.books} book(s) scanned</div></div></div></div>`).join("")}
+function renderBets(items){const count=Number(document.getElementById("betCount").value||8),top=items.filter(g=>g.confidence>=65).slice(0,count),el=document.getElementById("betsList");if(!top.length){el.innerHTML='<div class="status">No best bets for the current filter.</div>';return}el.innerHTML=top.map((g,i)=>`<div class="infoCard"><div class="v">#${i+1} • ${g.winner} • ${g.confidence}% • ${g.tag.label}</div><div class="meta">${g.matchup}</div><div class="meta">Spread: ${g.spread} • Total: ${g.total} • Edge: ${g.edge}</div></div>`).join("")}
+function renderUpsets(items){const up=items.filter(g=>g.tag.label==="UPSET"||g.tag.label==="TOSS-UP").slice(0,Number(document.getElementById("betCount").value||8)),el=document.getElementById("upsetsList");if(!up.length){el.innerHTML='<div class="status">No upset-watch games for the current filter.</div>';return}el.innerHTML=up.map(g=>`<div class="card"><div class="match">${g.matchup}</div><div class="meta">${g.region}</div><div class="tagRow"><span class="tag ${g.tag.cls}">${g.tag.label}</span></div><div class="meta">${g.why}</div></div>`).join("")}
+function renderBracket(items){const byRegion={};items.forEach(g=>{byRegion[g.region]=byRegion[g.region]||[];byRegion[g.region].push(g)});const el=document.getElementById("bracketList"),regions=Object.keys(byRegion).sort();if(!regions.length){el.innerHTML='<div class="status">No bracket data available.</div>';return}el.innerHTML=regions.map(region=>{const picks=byRegion[region].slice(0,4).map(g=>`${g.winner} (${g.confidence}%)`).join(" • ");return`<div class="mini"><div class="k">${region}</div><div class="v">${region} auto-picks</div><div class="s">${picks}</div></div>`}).join("")}
+function renderShare(items){const top=items.slice(0,Number(document.getElementById("betCount").value||8));const summary=[`SnapBracket™`,`Data source: ${LIVE_AVAILABLE?"LIVE NCAA odds":"Fallback board"}`,`Preset: ${activeRisk}`,`Top card:`].concat(top.map((g,i)=>`${i+1}. ${g.winner} over ${g.matchup} (${g.confidence}%)`)).join("\n");document.getElementById("shareSummary").textContent=top.length?summary:"No picks available to export right now."}
+function setSection(section){activeSection=section;document.querySelectorAll(".section").forEach(b=>b.classList.toggle("active",b.dataset.section===section));document.getElementById("boardSection").classList.toggle("hidden",section!=="board");document.getElementById("betsSection").classList.toggle("hidden",section!=="bets");document.getElementById("upsetsSection").classList.toggle("hidden",section!=="upsets");document.getElementById("bracketSection").classList.toggle("hidden",section!=="bracket");document.getElementById("shareSection").classList.toggle("hidden",section!=="share");document.getElementById("settingsSection").classList.toggle("hidden",section!=="settings");document.getElementById("sectionTitle").textContent=section==="board"?"Big Board":section==="bets"?"Best Bets":section==="upsets"?"Upset Watch":section==="bracket"?"Auto Bracket":section==="share"?"My Card / Share":"Settings"}
+function render(){const all=allMapped(),shown=filteredGames();buildTabs(all);document.getElementById("chipMode").textContent=`Mode: ${LIVE_AVAILABLE?"LIVE":"FALLBACK"}`;document.getElementById("chipUpdated").textContent=`Updated: ${new Date().toLocaleString()}`;document.getElementById("chipGames").textContent=`Games: ${shown.length}`;document.getElementById("chipBooks").textContent=`Books: ${Math.max(...all.map(g=>g.books),0)}`;document.getElementById("chipRisk").textContent=`Preset: ${activeRisk}`;renderBoard(shown);renderBets(shown);renderUpsets(shown);renderBracket(shown);renderShare(shown)}
+async function load(){document.getElementById("statusLine").textContent="Loading board…";try{const res=await fetch('/.netlify/functions/odds',{cache:'no-store'});const data=await res.json();if(Array.isArray(data)&&data.length>0){LIVE_AVAILABLE=true;RAW=data;document.getElementById("statusLine").textContent="Live board loaded";render();return}LIVE_AVAILABLE=false;RAW=FALLBACK_GAMES;document.getElementById("statusLine").textContent="Live NCAA odds unavailable right now — showing polished fallback board";render()}catch(err){LIVE_AVAILABLE=false;RAW=FALLBACK_GAMES;document.getElementById("statusLine").textContent="Live feed unavailable — showing polished fallback board";render()}}
+function openLegal(type){const content=document.getElementById("legalContent");if(type==="terms"){content.innerHTML=`<h3>Terms of Service</h3><p><b>SnapBracket™</b> is owned and operated exclusively by <b>Sasha G. Osgood</b>. All branding, design, interface elements, predictive logic, and related intellectual property are proprietary.</p><p>SnapBracket™ provides predictive analytics, projected winners, totals, confidence indicators, bracket suggestions, and summary exports for informational and entertainment purposes only. It does not constitute betting, gambling, financial, legal, or professional advice.</p><p>By using SnapBracket™, you agree that you are solely responsible for any decisions you make based on the information displayed.</p>`}else{content.innerHTML=`<h3>Privacy Policy</h3><p><b>SnapBracket™</b> currently does not collect, store, sell, or monetize personal user data in this version of the application.</p><p>Any sharing actions rely on your device and platform’s native tools. If future versions add accounts, analytics, or subscriptions, this policy may be updated.</p>`}document.getElementById("legalModal").style.display="flex"}
+function closeLegal(){document.getElementById("legalModal").style.display="none"}
+document.querySelectorAll(".risk").forEach(btn=>btn.onclick=()=>{document.querySelectorAll(".risk").forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeRisk=btn.dataset.risk.toUpperCase();render()});
+document.querySelectorAll(".section").forEach(btn=>btn.onclick=()=>setSection(btn.dataset.section));
+document.getElementById("refreshBtn").onclick=load;document.getElementById("minConfidence").oninput=render;document.getElementById("sortMode").onchange=render;document.getElementById("betCount").onchange=render;document.getElementById("termsBtn").onclick=()=>openLegal("terms");document.getElementById("privacyBtn").onclick=()=>openLegal("privacy");document.getElementById("footerTerms").onclick=(e)=>{e.preventDefault();openLegal("terms")};document.getElementById("footerPrivacy").onclick=(e)=>{e.preventDefault();openLegal("privacy")};document.getElementById("copySummaryBtn").onclick=async()=>{const txt=document.getElementById("shareSummary").textContent;try{await navigator.clipboard.writeText(txt);alert("Summary copied")}catch(e){alert("Copy failed")}};
+setSection("board");setTimeout(()=>{const splash=document.getElementById("splash");splash.classList.add("fadeOut");setTimeout(()=>splash.remove(),500)},1800);load();
 </script>
 </body>
 </html>
