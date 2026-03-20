@@ -5,17 +5,177 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>SnapBracket™</title>
+
 <style>
-body{background:#070A12;color:white;font-family:sans-serif;text-align:center;padding:40px}
-button{padding:10px 20px;margin:10px;border-radius:10px;border:none;background:#36A3FF;color:white;font-weight:bold}
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#070A12;
+  color:white;
+}
+
+.top{
+  padding:20px;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.title{
+  font-size:28px;
+  font-weight:900;
+}
+
+.sub{
+  color:#aaa;
+  font-size:12px;
+}
+
+.container{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  gap:20px;
+  padding:20px;
+}
+
+.panel{
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  padding:15px;
+}
+
+.btn{
+  display:block;
+  width:100%;
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#36A3FF;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.card{
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  padding:12px;
+  margin-bottom:10px;
+}
+
+.legal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+.legal-box{
+  background:#111;
+  padding:20px;
+  border-radius:10px;
+  max-width:500px;
+}
 </style>
+
 </head>
+
 <body>
 
-<h1>SnapBracket™ Phase 4A</h1>
-<p>System is live.</p>
+<div class="top">
+  <div class="title">SnapBracket™</div>
+  <div class="sub">Vegas-driven picks, totals, confidence</div>
+</div>
 
-<button onclick="alert('Best Bets Coming Next')">Best Bets</button> <button onclick="alert('Legal System Active')">Legal</button>
+<div class="container">
+
+<div class="panel">
+  <b>Controls</b>
+
+<button class="btn" onclick="showBets()">Best Bets</button> <button class="btn" onclick="showBoard()">Big Board</button> <button class="btn" onclick="openLegal()">Legal</button>
+
+</div>
+
+<div id="content">
+
+  <div id="board"></div>
+  <div id="bets" style="display:none"></div>
+
+</div>
+
+</div>
+
+<div class="legal" id="legal">
+  <div class="legal-box">
+    <h3>Terms</h3>
+    <p>This is for entertainment only. No guarantees.</p>
+    <button class="btn" onclick="closeLegal()">Close</button>
+  </div>
+</div>
+
+<script>
+
+function showBoard(){
+  document.getElementById("board").style.display="block";
+  document.getElementById("bets").style.display="none";
+}
+
+function showBets(){
+  document.getElementById("board").style.display="none";
+  document.getElementById("bets").style.display="block";
+}
+
+function openLegal(){
+  document.getElementById("legal").style.display="flex";
+}
+
+function closeLegal(){
+  document.getElementById("legal").style.display="none";
+}
+
+function load(){
+
+  const games = [
+    {match:"Duke vs UNC", pick:"Duke", conf:72},
+    {match:"Arizona vs UCLA", pick:"Arizona", conf:68},
+    {match:"Houston vs Kansas", pick:"Houston", conf:75}
+  ];
+
+  const board = document.getElementById("board");
+  const bets = document.getElementById("bets");
+
+  board.innerHTML = "";
+  bets.innerHTML = "";
+
+  games.forEach(g => {
+
+    board.innerHTML += `
+      <div class="card">
+        <b>${g.match}</b><br/>
+        Pick: ${g.pick} (${g.conf}%)
+      </div>
+    `;
+
+  });
+
+  games
+    .filter(g => g.conf >= 70)
+    .forEach(g => {
+
+      bets.innerHTML += `
+        <div class="card">
+          🔥 ${g.pick} (${g.conf}%)
+        </div>
+      `;
+
+    });
+
+}
+
+load();
+
+</script>
 
 </body>
 </html>
